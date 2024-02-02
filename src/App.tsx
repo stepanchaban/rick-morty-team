@@ -1,6 +1,6 @@
-import React, { ReactElement } from 'react';
+import { ReactElement } from 'react';
 import logo from './sources/icons/logo.png';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 
 function Header(): ReactElement {
     return (
@@ -14,6 +14,9 @@ function Header(): ReactElement {
 
 export function App(): ReactElement {
     return (
-        <Header/>
-    )   
+        <>
+            <Header />
+            <Outlet />
+        </>
+    )
 }
