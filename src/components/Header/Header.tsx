@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
-import logo from './sources/icons/logo.png';
-import { Link, Outlet } from 'react-router-dom';
+import logo from '../../sources/icons/logo.png';
+import { Link } from 'react-router-dom';
 
 function Header(): ReactElement {
     return (
@@ -10,13 +10,6 @@ function Header(): ReactElement {
             <Link to='/signup'><button>Sign up</button></Link>
         </header>
     )
-}
+};
 
-export function App(): ReactElement {
-    return (
-        <>
-            <Header />
-            <Outlet />
-        </>
-    )
-}
+export default Header;

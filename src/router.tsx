@@ -1,4 +1,4 @@
-import { App } from './App';
+import { App } from './components/App/App';
 import Main from './pages/main/Main';
 import Signin from './pages/signin/Signin';
 import Signup from './pages/signup/Signup';
