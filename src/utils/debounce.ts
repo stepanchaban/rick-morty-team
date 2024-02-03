@@ -1,17 +1,15 @@
-type DebounceFunction<T extends (...args: unknown[]) => unknown> = (
-    fn: T,
+type DebounceFunction = (
+    fn: <ArgumentsType, ReturnedValueType> (...args: ArgumentsType[]) => ReturnedValueType | void,
     delay: number
-) => (...args: Parameters<T>) => void;
+) => <ArgumentsType>(...args: ArgumentsType[]) => void;
 
-const debounce: DebounceFunction<(...args: unknown[]) => unknown> = (fn, delay) => {
+export const debounce: DebounceFunction = (fn, delay) => {
     let timeoutId: ReturnType<typeof setTimeout>;
 
-    return (...args: Parameters<typeof fn>) => {
+    return (...args) => {
         clearTimeout(timeoutId);
         timeoutId = setTimeout(() => {
             fn(...args);
         }, delay);
     };
 };
-
-export default debounce;
