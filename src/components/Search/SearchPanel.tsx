@@ -1,24 +1,19 @@
 import { ReactElement, useRef } from "react";
-import { debounce } from "../../utils/debounce";
+import useDebounce from "../../utils/useDebounce";
 
 const delay = 2000;
 
 function SearchPanel(): ReactElement {
     const ref = useRef<HTMLInputElement | null>(null);
-
-    function logCurrentInputValue(): void {
-        console.log(ref.current?.value);
-    }
-
-    const debouncedOnChange = debounce(logCurrentInputValue, delay);
+    const debouncedOnChange = useDebounce(onChange, delay);
 
     function onChange(): void{
-        debouncedOnChange();
+        console.log(ref.current?.value)
     }
 
     return (
         <div>
-            <input onChange={onChange} ref={ref} type="text" />
+            <input onChange={debouncedOnChange} ref={ref} type="text" />
         </div>
     )
 };
