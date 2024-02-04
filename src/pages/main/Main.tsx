@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
+import { ReactElement } from 'react';
 
-function Main(): ReactElement{
-    return <div>Main</div>
+function Main(): ReactElement {
+  return <div>Main</div>;
 }
 
 export default Main;
