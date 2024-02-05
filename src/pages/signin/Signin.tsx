@@ -1,11 +1,26 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { authSlice } from '../../store/modules/auth/reducer';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
 function Signin(): ReactElement {
+  const { setIsAuth } = authSlice.actions;
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector(state => state.auth.auth);
+
+  useEffect(() => {
+    if (auth) {
+      navigate('/');
+    }
+  }, []);
+
   const [userData, setUserData] = useState({
     email: '',
     password: '',
   });
   const [error, setError] = useState('');
+
+  const navigate = useNavigate();
 
   const handleLogin = (event: React.FormEvent): void => {
     event.preventDefault();
@@ -23,9 +38,11 @@ function Signin(): ReactElement {
           user.email === userData.email && user.password === userData.password,
       );
       if (user) {
+        dispatch(setIsAuth(true));
         setError('');
+        localStorage.setItem('isAuth', 'true');
         alert('Login successful!');
-        window.location.href = '/';
+        navigate('/');
       } else {
         setError('Invalid email or password.');
       }

@@ -1,14 +1,29 @@
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { authSlice } from '../../store/modules/auth/reducer';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 
 function Signup(): ReactElement {
+  const { setIsAuth } = authSlice.actions;
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector(state => state.auth.auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (auth) {
+      navigate('/');
+    }
+  }, []);
+
   const [userData, setUserData] = useState({
     email: '',
     password: '',
+    confirmPassword: '',
   });
+
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
-  const navigate = useNavigate();
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
@@ -27,12 +42,21 @@ function Signup(): ReactElement {
       setPasswordError('');
     }
 
+    if (userData.password !== userData.confirmPassword) {
+      setConfirmPasswordError('Passwords do not match');
+      return;
+    } else {
+      setConfirmPasswordError('');
+    }
+
     const usersString = localStorage.getItem('users');
     const users = usersString ? JSON.parse(usersString) : [];
 
     users.push(userData);
 
     localStorage.setItem('users', JSON.stringify(users));
+    dispatch(setIsAuth(true));
+    localStorage.setItem('isAuth', 'true');
 
     navigate('/');
   };
@@ -73,6 +97,23 @@ function Signup(): ReactElement {
             />
             <span style={{ marginTop: '10px', fontSize: '12px', color: 'red' }}>
               {passwordError}
+            </span>
+          </label>
+
+          <label>
+            <input
+              // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+              onChange={e =>
+                setUserData({ ...userData, confirmPassword: e.target.value })
+              }
+              id="confirmPassword"
+              type="password"
+              placeholder="Confirm Password"
+              name="confirmPassword"
+              required
+            />
+            <span style={{ marginTop: '10px', fontSize: '12px', color: 'red' }}>
+              {confirmPasswordError}
             </span>
           </label>
 
