@@ -1,5 +1,5 @@
 import { ReactElement, useRef } from "react";
-import useDebounce from "../../utils/useDebounce";
+import useDebounce from "@utils/useDebounce";
 
 const delay = 2000;
 
