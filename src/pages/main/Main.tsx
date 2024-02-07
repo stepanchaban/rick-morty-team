@@ -1,9 +1,13 @@
 import { ReactElement } from "react";
-import SearchPanel from "../../components/Search/SearchPanel";
+import SearchPanel from "@components/Search/SearchPanel";
+import CardList from "@components/CardList/CardList";
 
 function Main(): ReactElement{
     return (
-        <SearchPanel />
+        <>
+            <SearchPanel />
+            <CardList />
+        </>
     )
 }
 
