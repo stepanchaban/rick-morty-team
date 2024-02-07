@@ -1,5 +1,5 @@
 import { ReactElement } from "react";
-import HeartIcon from "./HeartIcon";
+import HeartButton from "./HeartButton";
 
 type Props = {
     src: string,
@@ -14,7 +14,7 @@ function Card({src, name, species, gender, status}: Props): ReactElement {
         <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', backgroundColor: 'white', padding: '20px', borderRadius:'10px', position: 'relative'}}>
             <div style={{position: 'relative'}}>
                 <img src={src} title = 'character'/>
-                <HeartIcon/>
+                <HeartButton/>
             </div>
             <span style={{textAlign: 'center', fontWeight: 'bold', fontSize: '20px'}}>{name}</span>
             <span>Species: {species}</span>

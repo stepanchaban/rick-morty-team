@@ -1,6 +1,6 @@
 import { ReactElement } from "react";
-import mockData from '../../../mock/mockServise';
-import Card from "../Card/Card";
+import mockData from '../../mock/mockServise';
+import Card from "@components/CardList/Card/Card";
 
 function CardList(): ReactElement {
     return (

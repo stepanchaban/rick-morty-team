@@ -1,8 +1,8 @@
 import { ReactElement, useState } from "react";
-import './heartIcon.css';
-import { ReactComponent as Heart } from '../../../sources/icons/favorite-heart-circle.svg';
+import './heartButton.css';
+import { ReactComponent as Heart } from '@sources/icons/favorite-heart-circle.svg';
 
-function HeartIcon(): ReactElement {
+function HeartButton(): ReactElement {
     const [isFavourite, setIsFavourite] = useState(false);
 
     function favouriteToggle(): void {
@@ -14,4 +14,4 @@ function HeartIcon(): ReactElement {
     )
 }
 
-export default HeartIcon;
+export default HeartButton;
