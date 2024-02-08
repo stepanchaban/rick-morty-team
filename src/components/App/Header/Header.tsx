@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import logo from '../../../sources/icons/logo.png';
+import logo from '@sources/icons/logo.png';
 import { Link } from 'react-router-dom';
 
 function Header(): ReactElement {
