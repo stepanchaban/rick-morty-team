@@ -1,12 +1,11 @@
 import { ReactElement } from "react";
-import mockData from '../../mock/mockServise';
-import Card from "@components/CardList/Card/Card";
+// import Card from "@components/CardList/Card/Card";
 
 function CardList(): ReactElement {
     return (
         <div style={{backgroundColor: 'lightblue'}}>
             <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: '30px', padding: '10px'}}>
-                {mockData.results.map((item, index) => {
+                {/* {mockData.results.map((item, index) => {
                     return (
                         <div key={index}>
                             <Card
@@ -18,7 +17,7 @@ function CardList(): ReactElement {
                             />
                         </div>
                     )
-                })}
+                })} */}
             </div>
         </div>
     )
