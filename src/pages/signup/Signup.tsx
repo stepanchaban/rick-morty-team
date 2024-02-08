@@ -1,3 +1,4 @@
+// Signup.tsx
 import { ReactElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { setIsAuth } from '../../store/modules/auth/reducer';
@@ -106,6 +107,7 @@ function Signup(): ReactElement {
       <div>
         <h1>Sign up</h1>
         <Form
+          formType="signup"
           userData={userData}
           formErrors={errors}
           handleInputChange={handleInputChange}

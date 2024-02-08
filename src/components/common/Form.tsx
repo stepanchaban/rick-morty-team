@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 
 interface FormProps {
+  formType: 'signin' | 'signup';
   userData: {
     email: string;
     password: string;
@@ -18,6 +19,7 @@ interface FormProps {
 }
 
 const Form: React.FC<FormProps> = ({
+  formType,
   userData,
   formErrors,
   handleInputChange,
@@ -55,7 +57,7 @@ const Form: React.FC<FormProps> = ({
         </span>
       </label>
 
-      {showConfirmPasswordInput && (
+      {formType === 'signup' && showConfirmPasswordInput && (
         <label>
           <input
             onChange={handleInputChange}

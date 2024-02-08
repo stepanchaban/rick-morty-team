@@ -121,6 +121,7 @@ function Signin(): ReactElement {
       <div>
         <h1>Sign in</h1>
         <Form
+          formType="signin"
           userData={userData}
           formErrors={error}
           handleInputChange={handleInputChange}
