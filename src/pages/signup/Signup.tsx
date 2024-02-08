@@ -1,62 +1,102 @@
-import React, { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authSlice } from '../../store/modules/auth/reducer';
+import { setIsAuth } from '../../store/modules/auth/reducer';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import Form from '../../components/common/Form';
+
+interface User {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+const isValidEmail = (email: string): boolean => {
+  const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  return emailRegex.test(email);
+};
+
+const isPasswordValid = (password: string): string | null => {
+  if (password.length < 6) {
+    return 'Password must be at least 6 characters long';
+  }
+  return null;
+};
 
 function Signup(): ReactElement {
-  const { setIsAuth } = authSlice.actions;
   const dispatch = useAppDispatch();
   const auth = useAppSelector(state => state.auth.auth);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (auth) {
-      navigate('/');
-    }
-  }, []);
-
-  const [userData, setUserData] = useState({
+  const [userData, setUserData] = useState<User>({
     email: '',
     password: '',
     confirmPassword: '',
   });
 
-  const [emailError, setEmailError] = useState('');
-  const [passwordError, setPasswordError] = useState('');
-  const [confirmPasswordError, setConfirmPasswordError] = useState('');
+  const [errors, setErrors] = useState({
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  useEffect(() => {
+    if (auth) {
+      navigate('/');
+    }
+  }, [auth, navigate]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = e.target;
+    setUserData(prevState => ({
+      ...prevState,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    if (!userData.email.includes('@')) {
-      setEmailError('Invalid email format');
+    if (!isValidEmail(userData.email)) {
+      setErrors(prevState => ({
+        ...prevState,
+        email: 'Invalid email format',
+      }));
       return;
-    } else {
-      setEmailError('');
     }
 
-    if (userData.password.length < 6) {
-      setPasswordError('Password must be at least 6 characters long');
+    const passwordError = isPasswordValid(userData.password);
+    if (passwordError) {
+      setErrors(prevState => ({
+        ...prevState,
+        password: passwordError,
+      }));
       return;
-    } else {
-      setPasswordError('');
     }
 
     if (userData.password !== userData.confirmPassword) {
-      setConfirmPasswordError('Passwords do not match');
+      setErrors(prevState => ({
+        ...prevState,
+        confirmPassword: 'Passwords do not match',
+      }));
       return;
-    } else {
-      setConfirmPasswordError('');
     }
 
     const usersString = localStorage.getItem('users');
-    const users = usersString ? JSON.parse(usersString) : [];
+    const users: User[] = usersString ? JSON.parse(usersString) : [];
 
-    users.push(userData);
+    const isUser = users.some((user: User) => user.email === userData.email);
+    if (isUser) {
+      setErrors({
+        ...errors,
+        email: 'This email is already registered',
+      });
+      return;
+    }
 
-    localStorage.setItem('users', JSON.stringify(users));
     dispatch(setIsAuth(true));
     localStorage.setItem('isAuth', 'true');
+    users.push(userData);
+    localStorage.setItem('users', JSON.stringify(users));
 
     navigate('/');
   };
@@ -65,60 +105,14 @@ function Signup(): ReactElement {
     <section>
       <div>
         <h1>Sign up</h1>
-        <form onSubmit={handleSubmit}>
-          <label>
-            <input
-              // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-              onChange={e =>
-                setUserData({ ...userData, email: e.target.value })
-              }
-              id="email"
-              type="text"
-              placeholder="Email"
-              name="email"
-              required
-            />
-            <span style={{ marginTop: '10px', fontSize: '12px', color: 'red' }}>
-              {emailError}
-            </span>
-          </label>
-
-          <label>
-            <input
-              // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-              onChange={e =>
-                setUserData({ ...userData, password: e.target.value })
-              }
-              id="password"
-              type="password"
-              placeholder="Password"
-              name="password"
-              required
-            />
-            <span style={{ marginTop: '10px', fontSize: '12px', color: 'red' }}>
-              {passwordError}
-            </span>
-          </label>
-
-          <label>
-            <input
-              // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-              onChange={e =>
-                setUserData({ ...userData, confirmPassword: e.target.value })
-              }
-              id="confirmPassword"
-              type="password"
-              placeholder="Confirm Password"
-              name="confirmPassword"
-              required
-            />
-            <span style={{ marginTop: '10px', fontSize: '12px', color: 'red' }}>
-              {confirmPasswordError}
-            </span>
-          </label>
-
-          <button type="submit">Sign up</button>
-        </form>
+        <Form
+          userData={userData}
+          formErrors={errors}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+          buttonText="Sign up"
+          showConfirmPasswordInput={true}
+        />
         <p>
           Already registered?
           <a href="/signin">Sign in</a>

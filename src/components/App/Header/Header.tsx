@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import logo from '../../../sources/icons/logo.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { authSlice } from '../../../store/modules/auth/reducer';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
 
@@ -8,10 +8,12 @@ function Header(): ReactElement {
   const { setIsAuth } = authSlice.actions;
   const dispatch = useAppDispatch();
   const auth = useAppSelector(state => state.auth.auth);
+  const navigate = useNavigate();
 
   const handleLogout = (): void => {
     dispatch(setIsAuth(false));
     localStorage.setItem('isAuth', 'false');
+    navigate('/');
   };
 
   return (
