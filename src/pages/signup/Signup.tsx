@@ -16,8 +16,10 @@ const isValidEmail = (email: string): boolean => {
   return emailRegex.test(email);
 };
 
+const passLength = 6;
+
 const isPasswordValid = (password: string): string | null => {
-  if (password.length < 6) {
+  if (password.length < passLength) {
     return 'Password must be at least 6 characters long';
   }
   return null;

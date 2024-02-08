@@ -15,8 +15,10 @@ const validateEmail = (email: string): boolean => {
   return emailRegex.test(email);
 };
 
+const passLength = 6;
+
 const validatePassword = (password: string): boolean => {
-  return password.length === 6;
+  return password.length === passLength;
 };
 
 const authUser = (
