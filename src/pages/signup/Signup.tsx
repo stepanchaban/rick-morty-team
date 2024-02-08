@@ -81,11 +81,17 @@ function Signup(): ReactElement {
     }
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     event.preventDefault();
 
-    const emailError = validateEmail(userData.email);
-    const passwordError = validatePassword(userData.password);
+    const formData = new FormData(event.currentTarget);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+
+    const emailError = validateEmail(email);
+    const passwordError = validatePassword(password);
 
     if (emailError || passwordError) {
       setErrors({
@@ -96,7 +102,7 @@ function Signup(): ReactElement {
       return;
     }
 
-    if (userData.password !== confirmPassword) {
+    if (password !== confirmPassword) {
       setErrors(prevState => ({
         ...prevState,
         confirmPassword: errorMessages.passwordsDoNotMatch,
@@ -107,7 +113,7 @@ function Signup(): ReactElement {
     const usersString = localStorage.getItem('users');
     const users: User[] = usersString ? JSON.parse(usersString) : [];
 
-    const isUser = users.some(user => user.email === userData.email);
+    const isUser = users.some(user => user.email === email);
     if (isUser) {
       setErrors(prevState => ({
         ...prevState,
@@ -120,12 +126,11 @@ function Signup(): ReactElement {
 
     dispatch(setIsAuth(true));
     localStorage.setItem('isAuth', 'true');
-    users.push(userData);
+    users.push({ email, password });
     localStorage.setItem('users', JSON.stringify(users));
 
     navigate('/');
   };
-
   return (
     <section>
       <div>

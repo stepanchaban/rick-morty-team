@@ -87,17 +87,23 @@ function Signin(): ReactElement {
     }));
   };
 
-  const handleSubmit = (event: React.FormEvent): void => {
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
     event.preventDefault();
 
-    const errors = validateUserData(userData);
+    const formData = new FormData(event.currentTarget);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+
+    const errors = validateUserData({ email, password });
     setError(errors);
 
     if (Object.values(errors).every(error => !error)) {
       const usersString = localStorage.getItem('users');
       if (usersString) {
         const users: User[] = JSON.parse(usersString);
-        if (authUser(userData, users)) {
+        if (authUser({ email, password }, users)) {
           dispatch(setIsAuth(true));
           localStorage.setItem('isAuth', 'true');
           alert('Login successful!');
