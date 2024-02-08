@@ -11,14 +11,40 @@ interface User {
 
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
-const validateEmail = (email: string): boolean => {
-  return emailRegex.test(email);
-};
-
 const passLength = 6;
 
-const validatePassword = (password: string): boolean => {
-  return password.length === passLength;
+const errorMessages = {
+  emptyEmail: 'Please enter email',
+  invalidEmailFormat: 'Invalid email format',
+  emptyPassword: 'Please enter password',
+  invalidPasswordLength: 'Password must be exactly 6 characters long',
+  invalidCredentials: 'Invalid email or password',
+  noUsersFound: 'No users found',
+};
+
+const validateEmail = (email: string): string => {
+  return emailRegex.test(email) ? '' : errorMessages.invalidEmailFormat;
+};
+
+const validatePassword = (password: string): string => {
+  return password.length === passLength
+    ? ''
+    : errorMessages.invalidPasswordLength;
+};
+
+const validateUserData = (userData: {
+  email: string;
+  password: string;
+}): { email: string; password: string } => {
+  const { email, password } = userData;
+  const errors = {
+    email: !email ? errorMessages.emptyEmail : validateEmail(email),
+    password: !password
+      ? errorMessages.emptyPassword
+      : validatePassword(password),
+  };
+
+  return errors;
 };
 
 const authUser = (
@@ -37,12 +63,10 @@ function Signin(): ReactElement {
   const auth = useAppSelector(state => state.auth.auth);
   const navigate = useNavigate();
 
-  const [userData, setUserData] = useState<{ email: string; password: string }>(
-    {
-      email: '',
-      password: '',
-    },
-  );
+  const [userData, setUserData] = useState<User>({
+    email: '',
+    password: '',
+  });
 
   const [error, setError] = useState<{ email: string; password: string }>({
     email: '',
@@ -63,59 +87,33 @@ function Signin(): ReactElement {
     }));
   };
 
-  const validateUserData = (): boolean => {
-    let isValid = true;
-    const newError = {
-      email: '',
-      password: '',
-    };
-
-    if (!userData.email) {
-      newError.email = 'Please enter email';
-      isValid = false;
-    } else if (!validateEmail(userData.email)) {
-      newError.email = 'Invalid email format';
-      isValid = false;
-    }
-
-    if (!userData.password) {
-      newError.password = 'Please enter password';
-      isValid = false;
-    } else if (!validatePassword(userData.password)) {
-      newError.password = 'Password must be exactly 6 characters long';
-      isValid = false;
-    }
-
-    setError(newError);
-    return isValid;
-  };
-
   const handleSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
 
-    if (!validateUserData()) {
-      return;
-    }
+    const errors = validateUserData(userData);
+    setError(errors);
 
-    const usersString = localStorage.getItem('users');
-    if (usersString) {
-      const users: User[] = JSON.parse(usersString);
-      if (authUser(userData, users)) {
-        dispatch(setIsAuth(true));
-        localStorage.setItem('isAuth', 'true');
-        alert('Login successful!');
-        navigate('/');
+    if (Object.values(errors).every(error => !error)) {
+      const usersString = localStorage.getItem('users');
+      if (usersString) {
+        const users: User[] = JSON.parse(usersString);
+        if (authUser(userData, users)) {
+          dispatch(setIsAuth(true));
+          localStorage.setItem('isAuth', 'true');
+          alert('Login successful!');
+          navigate('/');
+        } else {
+          setError({
+            email: errorMessages.invalidCredentials,
+            password: errorMessages.invalidCredentials,
+          });
+        }
       } else {
         setError({
-          email: 'Invalid email or password',
-          password: 'Invalid email or password',
+          email: errorMessages.noUsersFound,
+          password: errorMessages.noUsersFound,
         });
       }
-    } else {
-      setError({
-        email: 'No users found',
-        password: 'No users found',
-      });
     }
   };
 

@@ -7,22 +7,34 @@ import Form from '../../components/common/Form';
 interface User {
   email: string;
   password: string;
-  confirmPassword: string;
 }
 
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+const passLength = 6;
+
+const errorMessages = {
+  emptyEmail: 'Please enter email',
+  invalidEmailFormat: 'Invalid email format',
+  emptyPassword: 'Please enter password',
+  invalidPasswordLength: `Password must be exactly ${passLength} characters long`,
+  passwordsDoNotMatch: 'Passwords do not match',
+  emailAlreadyRegistered: 'This email is already registered',
+};
 
 const isValidEmail = (email: string): boolean => {
   return emailRegex.test(email);
 };
 
-const passLength = 6;
+const isPasswordValid = (password: string): boolean => {
+  return password.length === passLength;
+};
 
-const isPasswordValid = (password: string): string | null => {
-  if (password.length < passLength) {
-    return 'Password must be at least 6 characters long';
-  }
-  return null;
+const validateEmail = (email: string): string => {
+  return isValidEmail(email) ? '' : errorMessages.invalidEmailFormat;
+};
+
+const validatePassword = (password: string): string => {
+  return isPasswordValid(password) ? '' : errorMessages.invalidPasswordLength;
 };
 
 function Signup(): ReactElement {
@@ -33,10 +45,15 @@ function Signup(): ReactElement {
   const [userData, setUserData] = useState<User>({
     email: '',
     password: '',
-    confirmPassword: '',
   });
 
-  const [errors, setErrors] = useState({
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+
+  const [errors, setErrors] = useState<{
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }>({
     email: '',
     password: '',
     confirmPassword: '',
@@ -50,36 +67,39 @@ function Signup(): ReactElement {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
-    setUserData(prevState => ({
-      ...prevState,
-      [name]: value,
-    }));
+    if (name === 'email') {
+      setErrors(prevState => ({ ...prevState, email: '' }));
+    } else if (name === 'password') {
+      setErrors(prevState => ({ ...prevState, password: '' }));
+    } else if (name === 'confirmPassword') {
+      setErrors(prevState => ({ ...prevState, confirmPassword: '' }));
+    }
+    if (name === 'confirmPassword') {
+      setConfirmPassword(value);
+    } else {
+      setUserData(prevState => ({ ...prevState, [name]: value }));
+    }
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
-    if (!isValidEmail(userData.email)) {
-      setErrors(prevState => ({
-        ...prevState,
-        email: 'Invalid email format',
-      }));
+    const emailError = validateEmail(userData.email);
+    const passwordError = validatePassword(userData.password);
+
+    if (emailError || passwordError) {
+      setErrors({
+        email: emailError || '',
+        password: passwordError || '',
+        confirmPassword: '',
+      });
       return;
     }
 
-    const passwordError = isPasswordValid(userData.password);
-    if (passwordError) {
+    if (userData.password !== confirmPassword) {
       setErrors(prevState => ({
         ...prevState,
-        password: passwordError,
-      }));
-      return;
-    }
-
-    if (userData.password !== userData.confirmPassword) {
-      setErrors(prevState => ({
-        ...prevState,
-        confirmPassword: 'Passwords do not match',
+        confirmPassword: errorMessages.passwordsDoNotMatch,
       }));
       return;
     }
@@ -87,12 +107,14 @@ function Signup(): ReactElement {
     const usersString = localStorage.getItem('users');
     const users: User[] = usersString ? JSON.parse(usersString) : [];
 
-    const isUser = users.some((user: User) => user.email === userData.email);
+    const isUser = users.some(user => user.email === userData.email);
     if (isUser) {
-      setErrors({
-        ...errors,
-        email: 'This email is already registered',
-      });
+      setErrors(prevState => ({
+        ...prevState,
+        email: errorMessages.emailAlreadyRegistered,
+        password: '',
+        confirmPassword: '',
+      }));
       return;
     }
 
