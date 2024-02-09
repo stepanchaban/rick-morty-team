@@ -11,5 +11,11 @@ export const rickMorthyApi = createApi({
     getCharactersData: endpointsBuilder.query({
       query: () => `character${pageQuery}`,
     }),
+    getFilteredCharactersData: endpointsBuilder.query({
+      query: name => `character${pageQuery}&name=${name}`,
+    }),
+    getCharacterData: endpointsBuilder.query({
+      query: id => `character/${id}`,
+    }),
   }),
 });
