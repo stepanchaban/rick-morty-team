@@ -16,3 +16,5 @@ export const rickMorthyApi = createApi({
     }),
   }),
 });
+
+export const { useGetCharactersQuery, useGetFilteredCharactersQuery, useGetCharacterQuery } = rickMorthyApi;
