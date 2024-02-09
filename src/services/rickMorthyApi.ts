@@ -1,16 +1,17 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { Character, AllCharactersResponse } from './types';
 
 export const rickMorthyApi = createApi({
   reducerPath: 'rickMorthyApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://rickandmortyapi.com/api' }),
   endpoints: endpointsBuilder => ({
-    getCharactersData: endpointsBuilder.query({
+    getCharacters: endpointsBuilder.query<AllCharactersResponse, string>({
       query: () => `character`,
     }),
-    getFilteredCharactersData: endpointsBuilder.query({
+    getFilteredCharacters: endpointsBuilder.query<AllCharactersResponse, string>({
       query: name => `character/?name=${name}`,
     }),
-    getCharacterData: endpointsBuilder.query({
+    getCharacter: endpointsBuilder.query<Character, string>({
       query: id => `character/${id}`,
     }),
   }),
