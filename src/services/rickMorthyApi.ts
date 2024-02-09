@@ -8,7 +8,10 @@ export const rickMorthyApi = createApi({
     getCharacters: endpointsBuilder.query<AllCharactersResponse, string>({
       query: () => `character`,
     }),
-    getFilteredCharacters: endpointsBuilder.query<AllCharactersResponse, string>({
+    getFilteredCharacters: endpointsBuilder.query<
+      AllCharactersResponse,
+      string
+    >({
       query: name => `character/?name=${name}`,
     }),
     getCharacter: endpointsBuilder.query<Character, string>({
@@ -17,4 +20,8 @@ export const rickMorthyApi = createApi({
   }),
 });
 
-export const { useGetCharactersQuery, useGetFilteredCharactersQuery, useGetCharacterQuery } = rickMorthyApi;
+export const {
+  useGetCharactersQuery,
+  useGetFilteredCharactersQuery,
+  useGetCharacterQuery,
+} = rickMorthyApi;
