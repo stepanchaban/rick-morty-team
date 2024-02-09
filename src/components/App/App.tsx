@@ -1,14 +1,21 @@
 import { ReactElement } from 'react';
 import CommonLayer from './CommonLayer';
-
 import { Outlet } from 'react-router-dom';
+import styled from 'styled-components';
+
+const AppWrap = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+`
 
 export function App(): ReactElement {
     return (
-        <div style={{width: '90%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'}}>
+        <AppWrap>
             <CommonLayer>
                 <Outlet />
             </CommonLayer>
-        </ div>
+        </AppWrap>
     )
 }
