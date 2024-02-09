@@ -1,7 +1,156 @@
-import { ReactElement } from "react";
+import { ReactElement, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { setIsAuth } from '@store/store';
+import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
+import Form from '@components/App/common/Form';
 
-function Signout(): ReactElement{
-    return <div>Signout</div>
+interface User {
+  email: string;
+  password: string;
 }
 
-export default Signout;
+const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+const passLength = 6;
+
+const errorMessages = {
+  emptyEmail: 'Please enter email',
+  invalidEmailFormat: 'Invalid email format',
+  emptyPassword: 'Please enter password',
+  invalidPasswordLength: `Password must be exactly ${passLength} characters long`,
+  passwordsDoNotMatch: 'Passwords do not match',
+  emailAlreadyRegistered: 'This email is already registered',
+};
+
+const isValidEmail = (email: string): boolean => {
+  return emailRegex.test(email);
+};
+
+const isPasswordValid = (password: string): boolean => {
+  return password.length === passLength;
+};
+
+const validateEmail = (email: string): string => {
+  return isValidEmail(email) ? '' : errorMessages.invalidEmailFormat;
+};
+
+const validatePassword = (password: string): string => {
+  return isPasswordValid(password) ? '' : errorMessages.invalidPasswordLength;
+};
+
+function Signup(): ReactElement {
+  const dispatch = useAppDispatch();
+  const auth = useAppSelector(state => state.auth.auth);
+  const navigate = useNavigate();
+
+  const [userData, setUserData] = useState<User>({
+    email: '',
+    password: '',
+  });
+
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+
+  const [errors, setErrors] = useState<{
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }>({
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
+
+  useEffect(() => {
+    if (auth) {
+      navigate('/');
+    }
+  }, [auth, navigate]);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const { name, value } = e.target;
+    if (name === 'email') {
+      setErrors(prevState => ({ ...prevState, email: '' }));
+    } else if (name === 'password') {
+      setErrors(prevState => ({ ...prevState, password: '' }));
+    } else if (name === 'confirmPassword') {
+      setErrors(prevState => ({ ...prevState, confirmPassword: '' }));
+    }
+    if (name === 'confirmPassword') {
+      setConfirmPassword(value);
+    } else {
+      setUserData(prevState => ({ ...prevState, [name]: value }));
+    }
+  };
+
+  const handleSubmit = async (
+    event: React.FormEvent<HTMLFormElement>,
+  ): Promise<void> => {
+    event.preventDefault();
+
+    const formData = new FormData(event.currentTarget);
+    const email = formData.get('email') as string;
+    const password = formData.get('password') as string;
+
+    const emailError = validateEmail(email);
+    const passwordError = validatePassword(password);
+
+    if (emailError || passwordError) {
+      setErrors({
+        email: emailError || '',
+        password: passwordError || '',
+        confirmPassword: '',
+      });
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setErrors(prevState => ({
+        ...prevState,
+        confirmPassword: errorMessages.passwordsDoNotMatch,
+      }));
+      return;
+    }
+
+    const usersString = localStorage.getItem('users');
+    const users: User[] = usersString ? JSON.parse(usersString) : [];
+
+    const isUser = users.some(user => user.email === email);
+    if (isUser) {
+      setErrors(prevState => ({
+        ...prevState,
+        email: errorMessages.emailAlreadyRegistered,
+        password: '',
+        confirmPassword: '',
+      }));
+      return;
+    }
+
+    dispatch(setIsAuth(true));
+    localStorage.setItem('isAuth', 'true');
+    users.push({ email, password });
+    localStorage.setItem('users', JSON.stringify(users));
+
+    navigate('/');
+  };
+  return (
+    <section>
+      <div>
+        <h1>Sign up</h1>
+        <Form
+          formType="signup"
+          userData={userData}
+          formErrors={errors}
+          handleInputChange={handleInputChange}
+          handleSubmit={handleSubmit}
+          buttonText="Sign up"
+          showConfirmPasswordInput={true}
+        />
+        <p>
+          Already registered?
+          <a href="/signin">Sign in</a>
+        </p>
+      </div>
+    </section>
+  );
+}
+
+export default Signup;
