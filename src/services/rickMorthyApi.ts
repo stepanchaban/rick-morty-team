@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { Character, AllCharactersResponse } from './types';
 import { Card } from 'types/Card';
 
 export const rickMorthyApi = createApi({
@@ -8,26 +7,15 @@ export const rickMorthyApi = createApi({
   endpoints: endpointsBuilder => ({
     getCharacters: endpointsBuilder.query<Card[], void>({
       query: () => `character`,
-      transformResponse: (response: AllCharactersResponse) => {
-        return response.results.map((item) => {
-          return {
-            src: item.image,
-            name: item.name,
-            species: item.species,
-            gender: item.gender,
-            status: item.status,
-          }
-        })
-      }
+      transformResponse: filterResponse,
     }),
-    getFilteredCharacters: endpointsBuilder.query<
-      AllCharactersResponse,
-      string
-    >({
+    getFilteredCharacters: endpointsBuilder.query<Card[], string>({
       query: name => `character/?name=${name}`,
+      transformResponse: filterResponse,
     }),
-    getCharacter: endpointsBuilder.query<Character, string>({
+    getCharacter: endpointsBuilder.query<Card[], string>({
       query: id => `character/${id}`,
+      transformResponse: filterResponse,
     }),
   }),
 });
@@ -37,3 +25,46 @@ export const {
   useGetFilteredCharactersQuery,
   useGetCharacterQuery,
 } = rickMorthyApi;
+
+function filterResponse (response: AllCharactersResponse): Card[] {
+  return response.results.map(item => {
+    return {
+      src: item.image,
+      name: item.name,
+      species: item.species,
+      gender: item.gender,
+      status: item.status,
+    };
+  });
+};
+
+type Character = {
+  id: number;
+  created: string;
+  episode?: string[];
+  gender: string;
+  image: string;
+  location: {
+    name: string;
+    url?: string;
+  };
+  name: string;
+  origin?: {
+    name: string;
+    url: string;
+  };
+  species: string;
+  status: string;
+  type: string;
+  url?: string;
+};
+
+type AllCharactersResponse = {
+  info: {
+    count: number;
+    next: string | null;
+    pages: number;
+    prev: string | null;
+  };
+  results: Character[];
+};
