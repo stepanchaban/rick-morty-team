@@ -1,10 +1,22 @@
 import { ReactElement } from "react";
 // import Card from "@components/CardList/Card/Card";
+import styled from "styled-components";
+
+const CardListWrap = styled.div`
+    padding: 0 50px;
+`
+const CardListContent = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+`
 
 function CardList(): ReactElement {
     return (
-        <div style={{backgroundColor: 'lightblue'}}>
-            <div style={{display: 'flex', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center', gap: '30px', padding: '10px'}}>
+        <CardListWrap>
+            <CardListContent>
                 {/* {mockData.results.map((item, index) => {
                     return (
                         <div key={index}>
@@ -18,8 +30,8 @@ function CardList(): ReactElement {
                         </div>
                     )
                 })} */}
-            </div>
-        </div>
+            </CardListContent>
+        </CardListWrap>
     )
 }
 

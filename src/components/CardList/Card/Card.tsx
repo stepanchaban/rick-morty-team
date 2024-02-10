@@ -1,6 +1,40 @@
 import { ReactElement } from "react";
 import HeartButton from "./HeartButton";
+import styled from "styled-components";
 
+const CardWrap = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+`
+const ImageWrap = styled.div`
+    position: relative;
+`
+const CardTitle = styled.span`
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+`
+const CardButton = styled.button`
+    width: 50%;
+    background-color: #DA9BFA;
+    border-radius: 10px;
+    border: 2px solid #DA9BFA;
+    padding: 10px 0;
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 20px;
+    transition: 0.3s;
+    &:hover {
+        background-color: transparent;
+        border: 2px solid #DA9BFA;
+    }
+`
 type Props = {
     src: string,
     name: string,
@@ -11,17 +45,17 @@ type Props = {
 
 function Card({src, name, species, gender, status}: Props): ReactElement {
     return (
-        <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px', backgroundColor: 'white', padding: '20px', borderRadius:'10px', position: 'relative'}}>
-            <div style={{position: 'relative'}}>
+        <CardWrap>
+            <ImageWrap>
                 <img src={src} title = 'character'/>
                 <HeartButton/>
-            </div>
-            <span style={{textAlign: 'center', fontWeight: 'bold', fontSize: '20px'}}>{name}</span>
+            </ImageWrap>
+            <CardTitle>{name}</CardTitle>
             <span>Species: {species}</span>
             <span>Gender: {gender}</span>
             <span>Status: {status}</span>
-            <button style={{width: '50%', backgroundColor: 'lightgreen', borderRadius: '5px', border: '0px', padding: '5px', cursor: 'pointer', marginTop: '10px', fontSize: '20px'}}>More</button>
-        </div>
+            <CardButton>More</CardButton>
+        </CardWrap>
     )
 }
 
