@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
+import { ReactElement } from 'react';
 
-function Favorites(): ReactElement{
-    return <div>Favorites</div>
+function Favorites(): ReactElement {
+  return <div>Favorites</div>;
 }
 
 export default Favorites;
