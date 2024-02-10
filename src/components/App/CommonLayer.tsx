@@ -2,16 +2,16 @@ import { ReactElement } from 'react';
 import Header from './Header/Header';
 
 type Props = {
-    children: ReactElement
-}
+  children: ReactElement;
+};
 
 function CommonLayer({ children }: Props): ReactElement {
-    return (
-        <>
-            <Header />
-            {children}
-        </>
-    )
+  return (
+    <>
+      <Header />
+      {children}
+    </>
+  );
 }
 
 export default CommonLayer;

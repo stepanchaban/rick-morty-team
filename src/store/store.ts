@@ -1,13 +1,14 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import { rickMorthyApi } from "@services/rickMorthyApi";
+import { configureStore } from '@reduxjs/toolkit';
+import { setupListeners } from '@reduxjs/toolkit/query';
+import { rickMorthyApi } from '@services/rickMorthyApi';
 
 const store = configureStore({
-    reducer: {
-        [rickMorthyApi.reducerPath]: rickMorthyApi.reducer,
-    },
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(rickMorthyApi.middleware),
-})
+  reducer: {
+    [rickMorthyApi.reducerPath]: rickMorthyApi.reducer,
+  },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware().concat(rickMorthyApi.middleware),
+});
 
 setupListeners(store.dispatch);
 

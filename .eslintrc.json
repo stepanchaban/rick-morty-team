@@ -18,7 +18,7 @@
       "jsx": true
     }
   },
-  "plugins": ["@typescript-eslint"],
+  "plugins": ["@typescript-eslint", "prettier"],
   "rules": {
     "@typescript-eslint/ban-ts-comment": 1,
     "@typescript-eslint/no-unused-vars": [
@@ -34,7 +34,8 @@
     "no-duplicate-imports": ["error", { "includeExports": true }],
     "no-console": 1,
     "react/react-in-jsx-scope": "off",
-    "react/prop-types": 0
+    "react/prop-types": 0,
+    "prettier/prettier": ["error"]
   },
   "settings": {
     "react": {

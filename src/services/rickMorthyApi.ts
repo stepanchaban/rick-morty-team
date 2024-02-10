@@ -26,7 +26,7 @@ export const {
   useGetCharacterQuery,
 } = rickMorthyApi;
 
-function filterResponse (response: AllCharactersResponse): Card[] {
+function filterResponse(response: AllCharactersResponse): Card[] {
   return response.results.map(item => {
     return {
       src: item.image,
@@ -36,7 +36,7 @@ function filterResponse (response: AllCharactersResponse): Card[] {
       status: item.status,
     };
   });
-};
+}
 
 type Character = {
   id: number;
