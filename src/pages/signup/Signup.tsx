@@ -21,21 +21,16 @@ const errorMessages = {
   emailAlreadyRegistered: 'This email is already registered',
 };
 
-const isValidEmail = (email: string): boolean => {
-  return emailRegex.test(email);
-};
+const isValidEmail = (email: string): boolean => emailRegex.test(email);
 
-const isPasswordValid = (password: string): boolean => {
-  return password.length === passLength;
-};
+const isPasswordValid = (password: string): boolean =>
+  password.length === passLength;
 
-const validateEmail = (email: string): string => {
-  return isValidEmail(email) ? '' : errorMessages.invalidEmailFormat;
-};
+const validateEmail = (email: string): string =>
+  isValidEmail(email) ? '' : errorMessages.invalidEmailFormat;
 
-const validatePassword = (password: string): string => {
-  return isPasswordValid(password) ? '' : errorMessages.invalidPasswordLength;
-};
+const validatePassword = (password: string): string =>
+  isPasswordValid(password) ? '' : errorMessages.invalidPasswordLength;
 
 function Signup(): ReactElement {
   const dispatch = useAppDispatch();
@@ -67,13 +62,9 @@ function Signup(): ReactElement {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const { name, value } = e.target;
-    if (name === 'email') {
-      setErrors(prevState => ({ ...prevState, email: '' }));
-    } else if (name === 'password') {
-      setErrors(prevState => ({ ...prevState, password: '' }));
-    } else if (name === 'confirmPassword') {
-      setErrors(prevState => ({ ...prevState, confirmPassword: '' }));
-    }
+
+    setErrors(prevState => ({ ...prevState, [name]: '' }));
+
     if (name === 'confirmPassword') {
       setConfirmPassword(value);
     } else {
@@ -86,27 +77,18 @@ function Signup(): ReactElement {
   ): Promise<void> => {
     event.preventDefault();
 
-    const formData = new FormData(event.currentTarget);
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
+    const { email, password } = userData;
 
     const emailError = validateEmail(email);
     const passwordError = validatePassword(password);
 
-    if (emailError || passwordError) {
+    if (emailError || passwordError || password !== confirmPassword) {
       setErrors({
         email: emailError || '',
         password: passwordError || '',
-        confirmPassword: '',
+        confirmPassword:
+          password !== confirmPassword ? errorMessages.passwordsDoNotMatch : '',
       });
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setErrors(prevState => ({
-        ...prevState,
-        confirmPassword: errorMessages.passwordsDoNotMatch,
-      }));
       return;
     }
 
@@ -131,6 +113,7 @@ function Signup(): ReactElement {
 
     navigate('/');
   };
+
   return (
     <section>
       <div>
