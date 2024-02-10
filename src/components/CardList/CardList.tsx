@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
-// import Card from "@components/CardList/Card/Card";
+import Card from "@components/CardList/Card/Card";
 import styled from "styled-components";
+import { useGetCharactersQuery } from "@services/rickMorthyApi";
 
 const CardListWrap = styled.div`
     padding: 0 50px;
@@ -14,22 +15,27 @@ const CardListContent = styled.div`
 `
 
 function CardList(): ReactElement {
+    const { data, error, isLoading } = useGetCharactersQuery();
+
+    const content = isLoading ? <div>Loading...</div> : 
+    data?.results.map((item, index) => {
+        return (
+            <div key={index}>
+                <Card
+                    src = {item.image}
+                    name = {item.name}
+                    species = {item.species}
+                    gender = {item.gender}
+                    status = {item.status}
+                />
+            </div>
+        )
+    })
+
     return (
         <CardListWrap>
             <CardListContent>
-                {/* {mockData.results.map((item, index) => {
-                    return (
-                        <div key={index}>
-                            <Card
-                                src = {item.image}
-                                name = {item.name}
-                                species = {item.species}
-                                gender = {item.gender}
-                                status = {item.status}
-                            />
-                        </div>
-                    )
-                })} */}
+                {content}
             </CardListContent>
         </CardListWrap>
     )
