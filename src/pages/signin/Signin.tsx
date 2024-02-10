@@ -99,27 +99,30 @@ function Signin(): ReactElement {
     const errors = validateUserData({ email, password });
     setError(errors);
 
-    if (Object.values(errors).every(error => !error)) {
-      const usersString = localStorage.getItem('users');
-      if (usersString) {
-        const users: User[] = JSON.parse(usersString);
-        if (authUser({ email, password }, users)) {
-          dispatch(setIsAuth(true));
-          localStorage.setItem('isAuth', 'true');
-          alert('Login successful!');
-          navigate('/');
-        } else {
-          setError({
-            email: errorMessages.invalidCredentials,
-            password: errorMessages.invalidCredentials,
-          });
-        }
-      } else {
-        setError({
-          email: errorMessages.noUsersFound,
-          password: errorMessages.noUsersFound,
-        });
-      }
+    if (Object.values(errors).some(error => error)) {
+      return;
+    }
+
+    const usersString = localStorage.getItem('users');
+    if (!usersString) {
+      setError({
+        email: errorMessages.noUsersFound,
+        password: errorMessages.noUsersFound,
+      });
+      return;
+    }
+
+    const users: User[] = JSON.parse(usersString);
+    if (authUser({ email, password }, users)) {
+      dispatch(setIsAuth(true));
+      localStorage.setItem('isAuth', 'true');
+      alert('Login successful!');
+      navigate('/');
+    } else {
+      setError({
+        email: errorMessages.invalidCredentials,
+        password: errorMessages.invalidCredentials,
+      });
     }
   };
 
