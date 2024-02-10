@@ -1,32 +1,32 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 const useDebounce = (
-    funcForDebounce: <ArgumentsType, ReturnedValueType> (...args: ArgumentsType[]) => ReturnedValueType | void,
-    delay: number
-    ) : <ArgumentsType>(...args: ArgumentsType[]) => void => {
+  funcForDebounce: <ArgumentsType, ReturnedValueType>(
+    ...args: ArgumentsType[]
+  ) => ReturnedValueType | void,
+  delay: number,
+): (<ArgumentsType>(...args: ArgumentsType[]) => void) => {
+  let timeoutId: ReturnType<typeof setTimeout>;
 
-    let timeoutId: ReturnType<typeof setTimeout>;
-
-    useEffect(() => {
-        return () => {
-            if (timeoutId) {
-                clearTimeout(timeoutId);
-            }
-        };
-    });
-
-    const debouncedFunc = <ArgumentsType>(...args: ArgumentsType[]): void => {
-        if (timeoutId) {
-            clearTimeout(timeoutId);
-        }
-
-        timeoutId = setTimeout(() => {
-            funcForDebounce(...args);
-        }, delay);
+  useEffect(() => {
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
     };
+  });
 
-    return debouncedFunc;
+  const debouncedFunc = <ArgumentsType>(...args: ArgumentsType[]): void => {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+
+    timeoutId = setTimeout(() => {
+      funcForDebounce(...args);
+    }, delay);
+  };
+
+  return debouncedFunc;
 };
-
 
 export default useDebounce;

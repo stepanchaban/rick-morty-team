@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
+import { ReactElement } from 'react';
 
-function History(): ReactElement{
-    return <div>History</div>
+function History(): ReactElement {
+  return <div>History</div>;
 }
 
 export default History;

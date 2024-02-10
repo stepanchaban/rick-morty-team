@@ -1,7 +1,7 @@
-import { ReactElement } from "react";
+import { ReactElement } from 'react';
 
-function Signin(): ReactElement{
-    return <div>Signin</div>
+function Signin(): ReactElement {
+  return <div>Signin</div>;
 }
 
 export default Signin;
