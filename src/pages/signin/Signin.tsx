@@ -27,7 +27,7 @@ const validateEmail = (email: string): string => {
 };
 
 const validatePassword = (password: string): string => {
-  return password.length === passLength
+  return password.length >= passLength
     ? ''
     : errorMessages.invalidPasswordLength;
 };

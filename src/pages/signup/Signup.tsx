@@ -16,7 +16,7 @@ const errorMessages = {
   emptyEmail: 'Please enter email',
   invalidEmailFormat: 'Invalid email format',
   emptyPassword: 'Please enter password',
-  invalidPasswordLength: `Password must be exactly ${passLength} characters long`,
+  invalidPasswordLength: `Password must be at least ${passLength} characters long`,
   passwordsDoNotMatch: 'Passwords do not match',
   emailAlreadyRegistered: 'This email is already registered',
 };
@@ -24,7 +24,7 @@ const errorMessages = {
 const isValidEmail = (email: string): boolean => emailRegex.test(email);
 
 const isPasswordValid = (password: string): boolean =>
-  password.length === passLength;
+  password.length >= passLength;
 
 const validateEmail = (email: string): string =>
   isValidEmail(email) ? '' : errorMessages.invalidEmailFormat;
