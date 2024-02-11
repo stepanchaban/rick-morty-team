@@ -1,24 +1,18 @@
 import { ReactElement, useRef } from 'react';
+import { SearchInput, SearchWrap, Block } from './searchStyles';
+import SuggestionList from './Suggestion/SuggestionList';
 import useDebounce from '@utils/useDebounce';
-import styled from 'styled-components';
 
-const SearchWrap = styled.div`
-  padding: 30px 0;
-  text-align: center;
-`;
-const SearchInput = styled.input`
-  width: 40%;
-  border-radius: 20px;
-  border: 1px solid #838282;
-  outline: none;
-  font-size: 25px;
-  padding: 10px;
-  transition: 0.3s;
-  &:focus {
-    border: 1px solid #111111;
-  }
-`;
 const delay = 2000;
+
+const suggestionsArray = [
+  'Rick Sanchez',
+  'Morty Smith',
+  'Summer Smith',
+  'Beth Smith',
+  'Jerry Smith',
+  'Abadango Cluster Princess',
+];
 
 function SearchPanel(): ReactElement {
   const ref = useRef<HTMLInputElement | null>(null);
@@ -29,14 +23,17 @@ function SearchPanel(): ReactElement {
   }
 
   return (
-    <SearchWrap>
-      <SearchInput
-        onChange={debouncedOnChange}
-        ref={ref}
-        type="text"
-        placeholder="Type something"
-      />
-    </SearchWrap>
+    <Block>
+      <SearchWrap>
+        <SearchInput
+          onChange={debouncedOnChange}
+          ref={ref}
+          type="text"
+          placeholder="Type something"
+        />
+      </SearchWrap>
+      <SuggestionList suggestions={suggestionsArray} />
+    </Block>
   );
 }
 
