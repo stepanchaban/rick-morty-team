@@ -1,6 +1,6 @@
-import { ReactElement } from 'react';
+import React, { ReactElement } from 'react';
 
-interface FormProps {
+type FormProps = {
   formType: 'signin' | 'signup';
   userData: {
     email: string;
@@ -16,16 +16,15 @@ interface FormProps {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   buttonText: string;
   showConfirmPasswordInput: boolean;
-}
+};
 
 const Form: React.FC<FormProps> = ({
   formType,
   userData,
   formErrors,
+  buttonText,
   handleInputChange,
   handleSubmit,
-  buttonText,
-  showConfirmPasswordInput,
 }: FormProps): ReactElement => {
   return (
     <form onSubmit={handleSubmit}>
@@ -36,7 +35,6 @@ const Form: React.FC<FormProps> = ({
           placeholder="Email"
           value={userData.email}
           name="email"
-          required
         />
         <span style={{ marginTop: '10px', fontSize: '12px', color: 'red' }}>
           {formErrors.email}
@@ -50,14 +48,13 @@ const Form: React.FC<FormProps> = ({
           placeholder="Password"
           value={userData.password}
           name="password"
-          required
         />
         <span style={{ marginTop: '10px', fontSize: '12px', color: 'red' }}>
           {formErrors.password}
         </span>
       </label>
 
-      {formType === 'signup' && showConfirmPasswordInput && (
+      {formType === 'signup' && (
         <label>
           <input
             onChange={handleInputChange}
@@ -65,7 +62,6 @@ const Form: React.FC<FormProps> = ({
             placeholder="Confirm Password"
             value={userData.confirmPassword}
             name="confirmPassword"
-            required
           />
           <span style={{ marginTop: '10px', fontSize: '12px', color: 'red' }}>
             {formErrors.confirmPassword}

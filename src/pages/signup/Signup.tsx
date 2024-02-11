@@ -1,8 +1,8 @@
 import { ReactElement, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { setIsAuth } from '@store/store';
 import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
 import Form from '@components/App/common/Form';
+import { setIsAuth } from '@store/slice/formSlice';
 
 interface User {
   email: string;
@@ -72,9 +72,7 @@ function Signup(): ReactElement {
     }
   };
 
-  const handleSubmit = async (
-    event: React.FormEvent<HTMLFormElement>,
-  ): Promise<void> => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
     const { email, password } = userData;

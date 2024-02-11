@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import logo from '../../../sources/icons/logo.png';
+import logo from '@sources/icons/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { setIsAuth } from '@store/store';
 import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
