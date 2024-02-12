@@ -21,7 +21,7 @@ function SuggestionList({ suggestions }: Props): ReactElement {
       width={'30%'}
       justify_content={'space-around'}
       background_color={'white'}
-      top={'18%'}
+      top={'20%'}
       direction={'column'}
       border_radius={'10px'}
       gap={'5px'}
