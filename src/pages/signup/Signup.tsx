@@ -1,7 +1,12 @@
 import { ReactElement } from 'react';
+import AuthForm from '@components/App/common/AuthForm';
 
-function Signout(): ReactElement {
-  return <div>Signout</div>;
+function Signup(): ReactElement {
+  return (
+    <AuthForm formType="signup">
+      Already registered? <a href="/signin">Sign in</a>
+    </AuthForm>
+  );
 }
 
-export default Signout;
+export default Signup;
