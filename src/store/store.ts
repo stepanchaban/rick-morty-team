@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { rickMorthyApi } from '@services/rickMorthyApi';
+import sortReducer from '@store/slice/sortSlice';
 
 const store = configureStore({
   reducer: {
     [rickMorthyApi.reducerPath]: rickMorthyApi.reducer,
+    sort: sortReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(rickMorthyApi.middleware),
