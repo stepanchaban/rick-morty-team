@@ -1,10 +1,7 @@
-import { ReactElement, useRef } from 'react';
-import { Input } from '@components/styledComponents/Input';
+import { ReactElement, useEffect, useState } from 'react';
 import { Block } from '@components/styledComponents/Blocks';
+import SearchInput from './SearchInput';
 import SuggestionList from './Suggestion/SuggestionList';
-import useDebounce from '@utils/useDebounce';
-
-const delay = 2000;
 
 const suggestionsArray = [
   'Rick Sanchez',
@@ -15,23 +12,37 @@ const suggestionsArray = [
   'Abadango Cluster Princess',
 ];
 
-function SearchPanel(): ReactElement {
-  const ref = useRef<HTMLInputElement | null>(null);
-  const debouncedOnChange = useDebounce(onChange, delay);
+const filterSuggestions = (inputValue: string): string[] => {
+  return suggestionsArray.filter((suggestion: string) =>
+    suggestion.toLowerCase().includes(inputValue.toLowerCase()),
+  );
+};
 
-  function onChange(): void {
-    console.log(ref.current?.value);
+function SearchPanel(): ReactElement {
+  const [currentSuggestions, setSuggestions] = useState<string[]>([]);
+  const [searchValue, setSearchValue] = useState('');
+
+  useEffect(() => {
+    if (searchValue === '') {
+      setSuggestions([]);
+      return;
+    }
+    if (searchValue) {
+      const filteredSuggestions = filterSuggestions(searchValue);
+      setSuggestions(filteredSuggestions);
+    }
+  }, [searchValue]);
+
+  function setNewSearchValue(newSearchInput: string): void {
+    setSearchValue(newSearchInput);
   }
 
   return (
     <Block width={'30%'}>
-      <Input
-        onChange={debouncedOnChange}
-        ref={ref}
-        type="text"
-        placeholder="Type something..."
-      />
-      <SuggestionList suggestions={suggestionsArray} />
+      <SearchInput setNewSearchValue={setNewSearchValue} />
+      {!!currentSuggestions.length && (
+        <SuggestionList suggestions={currentSuggestions} />
+      )}
     </Block>
   );
 }
