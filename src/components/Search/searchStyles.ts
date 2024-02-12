@@ -35,12 +35,8 @@ export const ColoredAbsoluteBlock = styled(AbsoluteBlock)<ColoredBlock>`
   box-shadow: ${props => props.box_shadow};
 `;
 
-export const SearchWrap = styled.div`
-  padding: 30px 0;
-  text-align: center;
-`;
 export const SearchInput = styled.input`
-  width: 40%;
+  width: 30%;
   border-radius: 20px;
   border: 1px solid #838282;
   outline: none;
