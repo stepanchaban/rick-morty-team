@@ -1,5 +1,8 @@
 import { ReactElement } from 'react';
-import { ColoredAbsoluteBlock, Block } from '../searchStyles';
+import {
+  ColoredAbsoluteBlock,
+  Block,
+} from '@components/styledComponents/Blocks';
 
 type Props = {
   suggestions: string[];

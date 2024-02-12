@@ -2,15 +2,16 @@ import { ReactElement } from 'react';
 import SearchPanel from '@components/Search/SearchPanel';
 import CardList from '@components/CardList/CardList';
 import styled from 'styled-components';
+import { Block } from '@components/styledComponents/Blocks';
 
-const MainContent = styled.main`
+const MainContent = styled(Block)`
   background-color: #bbccfb;
   padding-bottom: 30px;
 `;
 
 function Main(): ReactElement {
   return (
-    <MainContent>
+    <MainContent direction={'column'} as="main">
       <SearchPanel />
       <CardList />
     </MainContent>

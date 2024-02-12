@@ -35,19 +35,6 @@ export const ColoredAbsoluteBlock = styled(AbsoluteBlock)<ColoredBlock>`
   box-shadow: ${props => props.box_shadow};
 `;
 
-export const SearchInput = styled.input`
-  width: 30%;
-  border-radius: 20px;
-  border: 1px solid #838282;
-  outline: none;
-  font-size: 25px;
-  padding: 10px;
-  transition: 0.3s;
-  &:focus {
-    border: 1px solid #111111;
-  }
-`;
-
 type BlockProps = {
   width?: string;
   height?: string;

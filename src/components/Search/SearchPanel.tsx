@@ -1,5 +1,6 @@
 import { ReactElement, useRef } from 'react';
-import { SearchInput, Block } from './searchStyles';
+import { Input } from '@components/styledComponents/Input';
+import { Block } from '@components/styledComponents/Blocks';
 import SuggestionList from './Suggestion/SuggestionList';
 import useDebounce from '@utils/useDebounce';
 
@@ -23,8 +24,8 @@ function SearchPanel(): ReactElement {
   }
 
   return (
-    <Block>
-      <SearchInput
+    <Block width={'30%'}>
+      <Input
         onChange={debouncedOnChange}
         ref={ref}
         type="text"
