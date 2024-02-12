@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { rickMorthyApi } from '@services/rickMorthyApi';
+import { authReducer } from './slice/formSlice';
 
 const store = configureStore({
   reducer: {
+    auth: authReducer,
     [rickMorthyApi.reducerPath]: rickMorthyApi.reducer,
   },
   middleware: getDefaultMiddleware =>
