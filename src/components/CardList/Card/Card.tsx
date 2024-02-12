@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 import HeartButton from './HeartButton';
 import styled from 'styled-components';
+import { Card as CardType } from '@projectTypes/Card';
 
 const CardWrap = styled.div`
   display: flex;
@@ -35,15 +36,8 @@ const CardButton = styled.button`
     border: 2px solid #da9bfa;
   }
 `;
-type Props = {
-  src: string;
-  name: string;
-  species: string;
-  gender: string;
-  status: string;
-};
 
-function Card({ src, name, species, gender, status }: Props): ReactElement {
+function Card({ src, name, species, gender, status }: CardType): ReactElement {
   return (
     <CardWrap>
       <ImageWrap>
