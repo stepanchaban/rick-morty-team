@@ -19,6 +19,12 @@
             ],
             "@hooks/*": [
                 "./hooks/*"
+            ],
+            "@services/*": [
+                "./services/*"
+            ],
+            "@projectTypes/*": [
+                "./types/*"
             ]
         }
     }
