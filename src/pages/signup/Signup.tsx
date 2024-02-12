@@ -3,34 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
 import Form from '@components/App/common/Form';
 import { setIsAuth } from '@store/slice/formSlice';
+import {
+  validateEmail,
+  validatePassword,
+} from '@utils/validation/validationUtils';
 
 interface User {
   email: string;
   password: string;
 }
-
-const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-const passLength = 6;
-
-const errorMessages = {
-  emptyEmail: 'Please enter email',
-  invalidEmailFormat: 'Invalid email format',
-  emptyPassword: 'Please enter password',
-  invalidPasswordLength: `Password must be at least ${passLength} characters long`,
-  passwordsDoNotMatch: 'Passwords do not match',
-  emailAlreadyRegistered: 'This email is already registered',
-};
-
-const isValidEmail = (email: string): boolean => emailRegex.test(email);
-
-const isPasswordValid = (password: string): boolean =>
-  password.length >= passLength;
-
-const validateEmail = (email: string): string =>
-  isValidEmail(email) ? '' : errorMessages.invalidEmailFormat;
-
-const validatePassword = (password: string): string =>
-  isPasswordValid(password) ? '' : errorMessages.invalidPasswordLength;
 
 function Signup(): ReactElement {
   const dispatch = useAppDispatch();
@@ -77,15 +58,19 @@ function Signup(): ReactElement {
 
     const { email, password } = userData;
 
-    const emailError = validateEmail(email);
-    const passwordError = validatePassword(password);
+    const emailValidationResult = validateEmail(email);
+    const passwordValidationResult = validatePassword(password);
 
-    if (emailError || passwordError || password !== confirmPassword) {
+    if (
+      !emailValidationResult.isValid ||
+      !passwordValidationResult.isValid ||
+      password !== confirmPassword
+    ) {
       setErrors({
-        email: emailError || '',
-        password: passwordError || '',
+        email: emailValidationResult.message,
+        password: passwordValidationResult.message,
         confirmPassword:
-          password !== confirmPassword ? errorMessages.passwordsDoNotMatch : '',
+          password !== confirmPassword ? 'Passwords do not match' : '',
       });
       return;
     }
@@ -97,7 +82,7 @@ function Signup(): ReactElement {
     if (isUser) {
       setErrors(prevState => ({
         ...prevState,
-        email: errorMessages.emailAlreadyRegistered,
+        email: 'This email is already registered',
         password: '',
         confirmPassword: '',
       }));

@@ -3,60 +3,15 @@ import { useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
 import Form from '@components/App/common/Form';
 import { setIsAuth } from '@store/slice/formSlice';
+import {
+  validateEmail,
+  validatePassword,
+} from '@utils/validation/validationUtils';
 
 interface User {
   email: string;
   password: string;
 }
-
-const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-
-const passLength = 6;
-
-const errorMessages = {
-  emptyEmail: 'Please enter email',
-  invalidEmailFormat: 'Invalid email format',
-  emptyPassword: 'Please enter password',
-  invalidPasswordLength: 'Password must be exactly 6 characters long',
-  invalidCredentials: 'Invalid email or password',
-  noUsersFound: 'No users found',
-};
-
-const validateEmail = (email: string): string => {
-  return emailRegex.test(email) ? '' : errorMessages.invalidEmailFormat;
-};
-
-const validatePassword = (password: string): string => {
-  return password.length >= passLength
-    ? ''
-    : errorMessages.invalidPasswordLength;
-};
-
-const validateUserData = (userData: {
-  email: string;
-  password: string;
-}): { email: string; password: string } => {
-  const { email, password } = userData;
-  const errors = {
-    email: !email ? errorMessages.emptyEmail : validateEmail(email),
-    password: !password
-      ? errorMessages.emptyPassword
-      : validatePassword(password),
-  };
-
-  return errors;
-};
-
-const authUser = (
-  userData: { email: string; password: string },
-  users: User[],
-): boolean => {
-  const user = users.find(
-    (user: User) =>
-      user.email === userData.email && user.password === userData.password,
-  );
-  return !!user;
-};
 
 function Signin(): ReactElement {
   const dispatch = useAppDispatch();
@@ -92,32 +47,39 @@ function Signin(): ReactElement {
 
     const { email, password } = userData;
 
-    const errors = validateUserData({ email, password });
-    setError(errors);
+    const emailValidationResult = validateEmail(email);
+    const passwordValidationResult = validatePassword(password);
 
-    if (Object.values(errors).some(error => error)) {
+    if (!emailValidationResult.isValid || !passwordValidationResult.isValid) {
+      setError({
+        email: emailValidationResult.message,
+        password: passwordValidationResult.message,
+      });
       return;
     }
 
     const usersString = localStorage.getItem('users');
     if (!usersString) {
       setError({
-        email: errorMessages.noUsersFound,
-        password: errorMessages.noUsersFound,
+        email: 'No users found',
+        password: 'No users found',
       });
       return;
     }
 
     const users: User[] = JSON.parse(usersString);
-    if (authUser({ email, password }, users)) {
+    const isAuth = users.some(
+      user => user.email === email && user.password === password,
+    );
+    if (isAuth) {
       dispatch(setIsAuth(true));
       localStorage.setItem('isAuth', 'true');
       alert('Login successful!');
       navigate('/');
     } else {
       setError({
-        email: errorMessages.invalidCredentials,
-        password: errorMessages.invalidCredentials,
+        email: 'Invalid email or password',
+        password: 'Invalid email or password',
       });
     }
   };
