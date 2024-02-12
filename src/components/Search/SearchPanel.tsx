@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from 'react';
+import { ReactElement, useCallback, useEffect, useState } from 'react';
 import { Block } from '@components/styledComponents/Blocks';
 import SearchInput from './SearchInput';
 import SuggestionList from './Suggestion/SuggestionList';
@@ -33,9 +33,11 @@ function SearchPanel(): ReactElement {
     }
   }, [searchValue]);
 
-  function setNewSearchValue(newSearchInput: string): void {
+  const setNewSearchValue = useCallback(function (
+    newSearchInput: string,
+  ): void {
     setSearchValue(newSearchInput);
-  }
+  }, []);
 
   return (
     <Block width={'30%'}>
