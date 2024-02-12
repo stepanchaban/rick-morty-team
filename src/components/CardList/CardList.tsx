@@ -1,11 +1,8 @@
-import { ReactElement } from 'react';
+import { ReactElement, Fragment } from 'react';
 import Card from '@components/CardList/Card/Card';
 import styled from 'styled-components';
 import { useGetCharactersQuery } from '@services/rickMorthyApi';
 
-const CardListWrap = styled.div`
-  padding: 0 50px;
-`;
 const CardListContent = styled.div`
   display: flex;
   flex-direction: row;
@@ -22,7 +19,7 @@ function CardList(): ReactElement {
   ) : (
     data?.map((item, index) => {
       return (
-        <div key={index}>
+        <Fragment key={index}>
           <Card
             src={item.src}
             name={item.name}
@@ -30,16 +27,12 @@ function CardList(): ReactElement {
             gender={item.gender}
             status={item.status}
           />
-        </div>
+        </Fragment>
       );
     })
   );
 
-  return (
-    <CardListWrap>
-      <CardListContent>{content}</CardListContent>
-    </CardListWrap>
-  );
+  return <CardListContent>{content}</CardListContent>;
 }
 
 export default CardList;
