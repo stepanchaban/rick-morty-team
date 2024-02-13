@@ -50,6 +50,10 @@ const FormButton = styled.button`
   transition: background-color 0.4s ease;
   width: 50%;
   cursor: pointer;
+
+  &:hover {
+    background-color: #6078ed;
+  }
 `;
 
 type FormProps = {
