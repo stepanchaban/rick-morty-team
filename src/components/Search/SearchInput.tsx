@@ -1,6 +1,5 @@
 import { ReactElement, memo, useEffect, useRef } from 'react';
 import { Input } from '@components/styledComponents/Input';
-import useAutoComplete from './useAutoComplete';
 import useDebounce from '@utils/useDebounce';
 
 const delay = 1000;
@@ -10,7 +9,7 @@ type Props = {
   selectedItem: string;
 };
 
-const SearchInput = function ({
+const SearchInput = memo(function ({
   setNewSearchValue,
   selectedItem,
 }: Props): ReactElement {
@@ -29,6 +28,7 @@ const SearchInput = function ({
     }
     setNewSearchValue(ref.current?.value);
   }
+  console.log('input');
 
   return (
     <Input
@@ -38,8 +38,8 @@ const SearchInput = function ({
       placeholder="Type something..."
     />
   );
-};
+});
 
-// SearchInput.displayName = 'SearchInput';
+SearchInput.displayName = 'SearchInput';
 
 export default SearchInput;

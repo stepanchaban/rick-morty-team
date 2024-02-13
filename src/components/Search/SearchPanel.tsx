@@ -1,4 +1,4 @@
-import { ReactElement, useCallback, useEffect, useState } from 'react';
+import { ReactElement, useCallback } from 'react';
 import { Block } from '@components/styledComponents/Blocks';
 import SearchInput from './SearchInput';
 import SuggestionList from './Suggestion/SuggestionList';
@@ -20,40 +20,18 @@ const filterSuggestions = (inputValue: string, source: string[]): string[] => {
 };
 
 function SearchPanel(): ReactElement {
-  // const [currentSuggestions, setSuggestions] = useState<string[]>([]);
-  // const [searchValue, setSearchValue] = useState('');
-
-  // useEffect(() => {
-  //   if (searchValue === '') {
-  //     setSuggestions([]);
-  //     return;
-  //   }
-  //   if (searchValue) {
-  //     const filteredSuggestions = filterSuggestions(searchValue);
-  //     setSuggestions(filteredSuggestions);
-  //   }
-  // }, [searchValue]);
-
-  // const setNewSearchValue = useCallback(function (
-  //   newSearchInput: string,
-  // ): void {
-  //   setSearchValue(newSearchInput);
-  // }, []);
-
-  // function selectSuggestion(selectedSuggestion: string): void {
-  //   setSearchValue(selectedSuggestion);
-  //   setSuggestions([]);
-  // }
   const { suggestions, selectedItem, setNewSearchValue, selectSuggestion } =
-    useAutoComplete<string[]>({
+    useAutoComplete({
       filterFn: filterSuggestions,
       source: suggestionsArray,
     });
 
+  const memoizedSetNewSearchValue = useCallback(setNewSearchValue, []);
+
   return (
     <Block width={'30%'}>
       <SearchInput
-        setNewSearchValue={setNewSearchValue}
+        setNewSearchValue={memoizedSetNewSearchValue}
         selectedItem={selectedItem}
       />
       <SuggestionList

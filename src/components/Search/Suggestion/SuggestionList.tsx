@@ -3,7 +3,6 @@ import {
   ColoredAbsoluteBlock,
   Block,
 } from '@components/styledComponents/Blocks';
-import useAutoComplete from '../useAutoComplete';
 
 type Props = {
   suggestions: string[];

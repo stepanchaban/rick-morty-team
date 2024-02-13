@@ -8,7 +8,7 @@ type Props = {
 };
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-function useAutoComplete<Source>({ filterFn, source }: Props) {
+function useAutoComplete({ filterFn, source }: Props) {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
