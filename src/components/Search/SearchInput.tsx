@@ -23,12 +23,10 @@ const SearchInput = memo(function ({
   }, [selectedItem]);
 
   function onChange(): void {
-    if (!ref.current) {
-      return;
+    if (ref.current) {
+      setNewSearchValue(ref.current?.value);
     }
-    setNewSearchValue(ref.current?.value);
   }
-  console.log('input');
 
   return (
     <Input
