@@ -49,6 +49,7 @@ const FormButton = styled.button`
   padding: 10px 16px;
   transition: background-color 0.4s ease;
   width: 50%;
+  cursor: pointer;
 `;
 
 type FormProps = {
