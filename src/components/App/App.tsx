@@ -5,9 +5,10 @@ import styled from 'styled-components';
 
 const AppWrap = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
   flex-direction: column;
+  max-width: 100vw;
+  min-height: 100vh;
+  min-width: 375px;
 `;
 
 export function App(): ReactElement {
