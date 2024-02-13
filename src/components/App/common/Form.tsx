@@ -1,4 +1,55 @@
 import React, { ReactElement } from 'react';
+import styled from 'styled-components';
+
+const FormAuth = styled.form`
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+const FormLabel = styled.label`
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  width: 100%;
+`;
+
+const FormInput = styled.input`
+  margin-top: 5px;
+  background-color: transparent;
+  border: 1px solid #595959;
+  border-radius: 12px;
+  box-sizing: border-box;
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: normal;
+  line-height: normal;
+  padding: 9px 50px 9px 16px;
+  transition: border-color 0.4s ease;
+`;
+
+const FormSpan = styled.span`
+  margin-bottom: 20px;
+  font-size: 12px;
+  color: red;
+`;
+
+const FormButton = styled.button`
+  background-color: #4fb4f5;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: normal;
+  line-height: normal;
+  padding: 10px 16px;
+  transition: background-color 0.4s ease;
+  width: 50%;
+`;
 
 type FormProps = {
   formType: 'signin' | 'signup';
@@ -27,50 +78,44 @@ const Form: React.FC<FormProps> = ({
   handleSubmit,
 }: FormProps): ReactElement => {
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        <input
+    <FormAuth onSubmit={handleSubmit}>
+      <FormLabel>
+        <FormInput
           onChange={handleInputChange}
           type="text"
           placeholder="Email"
           value={userData.email}
           name="email"
         />
-        <span style={{ marginTop: '10px', fontSize: '12px', color: 'red' }}>
-          {formErrors.email}
-        </span>
-      </label>
+        <FormSpan>{formErrors.email}</FormSpan>
+      </FormLabel>
 
-      <label>
-        <input
+      <FormLabel>
+        <FormInput
           onChange={handleInputChange}
           type="password"
           placeholder="Password"
           value={userData.password}
           name="password"
         />
-        <span style={{ marginTop: '10px', fontSize: '12px', color: 'red' }}>
-          {formErrors.password}
-        </span>
-      </label>
+        <FormSpan>{formErrors.password}</FormSpan>
+      </FormLabel>
 
       {formType === 'signup' && (
-        <label>
-          <input
+        <FormLabel>
+          <FormInput
             onChange={handleInputChange}
             type="password"
             placeholder="Confirm Password"
             value={userData.confirmPassword}
             name="confirmPassword"
           />
-          <span style={{ marginTop: '10px', fontSize: '12px', color: 'red' }}>
-            {formErrors.confirmPassword}
-          </span>
-        </label>
+          <FormSpan>{formErrors.confirmPassword}</FormSpan>
+        </FormLabel>
       )}
 
-      <button type="submit">{buttonText}</button>
-    </form>
+      <FormButton type="submit">{buttonText}</FormButton>
+    </FormAuth>
   );
 };
 
