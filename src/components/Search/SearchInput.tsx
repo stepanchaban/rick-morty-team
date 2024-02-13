@@ -17,14 +17,14 @@ const SearchInput = memo(function ({
   const debouncedOnChange = useDebounce(onChange, delay);
 
   useEffect(() => {
-    if (ref.current) {
+    if (ref.current && selectedItem.length) {
       ref.current.value = selectedItem;
     }
   }, [selectedItem]);
 
   function onChange(): void {
     if (ref.current) {
-      setNewSearchValue(ref.current?.value);
+      setNewSearchValue(ref.current.value);
     }
   }
 

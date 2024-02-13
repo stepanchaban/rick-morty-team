@@ -20,13 +20,13 @@ function useAutoComplete<Source>({ filterFn, source }: Props<Source>): {
       setSuggestions([]);
       return;
     }
-    if (searchValue) {
-      setSuggestions(filterFn(searchValue, source));
-      return;
-    }
+    setSuggestions(filterFn(searchValue, source));
   }, [filterFn, searchValue, source]);
 
   function setNewSearchValue(newSearchInput: string): void {
+    if (selectedItem.length) {
+      setSelectedItem('');
+    }
     setSearchValue(newSearchInput);
   }
 

@@ -26,7 +26,9 @@ function SearchPanel(): ReactElement {
       source: suggestionsArray,
     });
 
-  const memoizedSetNewSearchValue = useCallback(setNewSearchValue, []);
+  const memoizedSetNewSearchValue = useCallback(setNewSearchValue, [
+    selectedItem,
+  ]);
 
   return (
     <Block width={'30%'}>
