@@ -2,6 +2,7 @@ import { ReactElement, Fragment } from 'react';
 import Card from '@components/CardList/Card/Card';
 import styled from 'styled-components';
 import { useGetCharactersQuery } from '@services/rickMorthyApi';
+import SortPanel from './SortPanel';
 
 const CardListContent = styled.div`
   display: flex;
@@ -32,7 +33,12 @@ function CardList(): ReactElement {
     })
   );
 
-  return <CardListContent>{content}</CardListContent>;
+  return (
+    <>
+      <SortPanel />
+      <CardListContent>{content}</CardListContent>
+    </>
+  );
 }
 
 export default CardList;
