@@ -16,12 +16,7 @@ function SuggestionList({
       selectSuggestion(suggestion);
     }
     return (
-      <Item
-        onClick={onClick}
-        border_radius={'10px'}
-        background_hover={'#adb0b3'}
-        key={index}
-      >
+      <Item onClick={onClick} border_radius={'10px'} key={index}>
         {suggestion}
       </Item>
     );

@@ -5,7 +5,7 @@ export const Item = styled.li<ItemProps>`
   border-radius: ${props => props.border_radius};
   padding: 10px;
   &:hover {
-    background-color: ${props => props.background_hover || ''};
+    background-color: #adb0b3};
   }
 `;
 
@@ -20,5 +20,4 @@ export const List = styled.ul`
 
 type ItemProps = {
   border_radius: string;
-  background_hover: string;
 };
