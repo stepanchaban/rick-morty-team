@@ -26,7 +26,8 @@ function SuggestionList({
       </Item>
     );
   });
-  return (
+
+  const SuggectionsPanel = (
     <ColoredAbsoluteBlock
       width={'30%'}
       justify_content={'space-around'}
@@ -40,6 +41,9 @@ function SuggestionList({
       <List>{suggestionsList}</List>
     </ColoredAbsoluteBlock>
   );
+
+  const content = suggestions.length ? SuggectionsPanel : null;
+  return <>{content}</>;
 }
 
 export default SuggestionList;

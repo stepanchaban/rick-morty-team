@@ -1,7 +1,7 @@
 import { ReactElement, useCallback } from 'react';
 import { Block } from '@components/styledComponents/Blocks';
 import SearchInput from './SearchInput';
-import SuggestionList from './Suggestion/SuggestionList';
+import SuggestionList from './SuggestionList';
 import useAutoComplete from './useAutoComplete';
 
 const suggestionsArray = [
