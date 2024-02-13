@@ -11,9 +11,6 @@ export const Block = styled.div<BlockProps>`
   gap: ${props => props.gap};
   border-radius: ${props => props.border_radius};
   padding: ${props => props.padding || '10px'};
-  &:hover {
-    background-color: ${props => props.background_hover || ''};
-  }
 `;
 
 export const AbsoluteBlock = styled(Block)<AbsoluteBlock>`
