@@ -1,16 +1,27 @@
-import { ReactElement, memo, useRef } from 'react';
+import { ReactElement, memo, useEffect, useRef } from 'react';
 import { Input } from '@components/styledComponents/Input';
+import useAutoComplete from './useAutoComplete';
 import useDebounce from '@utils/useDebounce';
 
-const delay = 2000;
+const delay = 1000;
 
 type Props = {
   setNewSearchValue: (inputValue: string) => void;
+  selectedItem: string;
 };
 
-const SearchInput = memo(function ({ setNewSearchValue }: Props): ReactElement {
+const SearchInput = function ({
+  setNewSearchValue,
+  selectedItem,
+}: Props): ReactElement {
   const ref = useRef<HTMLInputElement | null>(null);
   const debouncedOnChange = useDebounce(onChange, delay);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.value = selectedItem;
+    }
+  }, [selectedItem]);
 
   function onChange(): void {
     if (!ref.current) {
@@ -27,8 +38,8 @@ const SearchInput = memo(function ({ setNewSearchValue }: Props): ReactElement {
       placeholder="Type something..."
     />
   );
-});
+};
 
-SearchInput.displayName = 'SearchInput';
+// SearchInput.displayName = 'SearchInput';
 
 export default SearchInput;

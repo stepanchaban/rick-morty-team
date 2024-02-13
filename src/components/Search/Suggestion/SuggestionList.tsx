@@ -3,15 +3,28 @@ import {
   ColoredAbsoluteBlock,
   Block,
 } from '@components/styledComponents/Blocks';
+import useAutoComplete from '../useAutoComplete';
 
 type Props = {
   suggestions: string[];
+  selectSuggestion: (selectedSuggestion: string) => void;
 };
 
-function SuggestionList({ suggestions }: Props): ReactElement {
+function SuggestionList({
+  suggestions,
+  selectSuggestion,
+}: Props): ReactElement {
   const suggestionsList = suggestions.map((suggestion, index) => {
+    function onClick(): void {
+      selectSuggestion(suggestion);
+    }
     return (
-      <Block border_radius={'10px'} background_hover={'#adb0b3'} key={index}>
+      <Block
+        onClick={onClick}
+        border_radius={'10px'}
+        background_hover={'#adb0b3'}
+        key={index}
+      >
         {suggestion}
       </Block>
     );
