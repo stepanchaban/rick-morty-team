@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 
-// let returnedValue: [string, string[]];
-
-type Props = {
-  filterFn: (searchValue: string, source: string[]) => string[];
-  source: string[];
+type Props<Source> = {
+  filterFn: (searchValue: string, source: Source) => string[];
+  source: Source;
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-function useAutoComplete({ filterFn, source }: Props) {
+function useAutoComplete<Source>({ filterFn, source }: Props<Source>): {
+  suggestions: string[];
+  selectedItem: string;
+  setNewSearchValue: (newSearchInput: string) => void;
+  selectSuggestion: (newSelectedItem: string) => void;
+} {
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState('');
   const [selectedItem, setSelectedItem] = useState('');
