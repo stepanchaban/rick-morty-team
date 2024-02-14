@@ -1,15 +1,7 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import {
-  setSortDataByAlphabet,
-  setSortDataGenderFemaleFirst,
-  setSortDataGenderMaleFirst,
-  setSortDataStatusAliveFirst,
-  setSortDataStatusDeadFirst,
-} from '@store/slice/manageDataSlice';
-import { useAppDispatch } from '@hooks/reduxHooks';
-import { PayloadAction } from '@reduxjs/toolkit';
-import { Character } from '@projectTypes/Character';
+import { setData } from '@store/slice/manageDataSlice';
+import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
 
 const SortPanelWrap = styled.div`
   display: flex;
@@ -22,59 +14,35 @@ const SortPanelForm = styled.form`
   gap: 20px;
 `;
 
-type DataPayloadAction = PayloadAction<Character[]>;
-
 function SortPanel(): ReactElement {
   const dispatch = useAppDispatch();
 
-  const inputHandler = (dataAction: DataPayloadAction) => () => {
-    dispatch(dataAction);
-  };
+  const data = useAppSelector(state => state.manageData.data);
+
+  function inputHandler(): void {
+    dispatch(setData(data));
+  }
+
+  const labels = [
+    'Sort names by alphabet',
+    'Show female characters first',
+    'Show male characters first',
+    'Show alive characters first',
+    'Show dead characters first',
+  ];
+
+  const radioInputs = labels.map((label, index) => {
+    return (
+      <label key={index}>
+        <input type="radio" name="sort" onClick={inputHandler}></input>
+        {label}
+      </label>
+    );
+  });
 
   return (
     <SortPanelWrap>
-      <SortPanelForm>
-        <label>
-          <input
-            type="radio"
-            name="sort"
-            onClick={inputHandler(setSortDataByAlphabet([]))}
-          />
-          Sort names by alphabet
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="sort"
-            onClick={inputHandler(setSortDataGenderFemaleFirst([]))}
-          />
-          Show female characters first
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="sort"
-            onClick={inputHandler(setSortDataGenderMaleFirst([]))}
-          />
-          Show male characters first
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="sort"
-            onClick={inputHandler(setSortDataStatusAliveFirst([]))}
-          />
-          Show alive characters first
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="sort"
-            onClick={inputHandler(setSortDataStatusDeadFirst([]))}
-          />
-          Show dead characters first
-        </label>
-      </SortPanelForm>
+      <SortPanelForm>{radioInputs}</SortPanelForm>
     </SortPanelWrap>
   );
 }
