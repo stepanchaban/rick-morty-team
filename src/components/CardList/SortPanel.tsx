@@ -9,6 +9,7 @@ import {
 } from '@store/slice/manageDataSlice';
 import { useAppDispatch } from '@hooks/reduxHooks';
 import { PayloadAction } from '@reduxjs/toolkit';
+import { Character } from '@projectTypes/Character';
 
 const SortPanelWrap = styled.div`
   display: flex;
@@ -20,26 +21,6 @@ const SortPanelForm = styled.form`
   display: flex;
   gap: 20px;
 `;
-type Character = {
-  id: number;
-  created: string;
-  episode?: string[];
-  gender: string;
-  image: string;
-  location: {
-    name: string;
-    url?: string;
-  };
-  name: string;
-  origin?: {
-    name: string;
-    url: string;
-  };
-  species: string;
-  status: string;
-  type: string;
-  url?: string;
-};
 
 type DataPayloadAction = PayloadAction<Character[]>;
 
