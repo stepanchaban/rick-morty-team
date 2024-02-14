@@ -1,13 +1,14 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
 import {
-  sortGenderFemaleFirst,
-  sortNamesByAlphabet,
-  sortGenderMaleFirst,
-  sortStatusAliveFirst,
-  sortStatusDeadFirst,
-} from '@store/slice/sortSlice';
+  setSortDataByAlphabet,
+  setSortDataGenderFemaleFirst,
+  setSortDataGenderMaleFirst,
+  setSortDataStatusAliveFirst,
+  setSortDataStatusDeadFirst,
+} from '@store/slice/manageDataSlice';
 import { useAppDispatch } from '@hooks/reduxHooks';
+import { PayloadAction } from '@reduxjs/toolkit';
 
 const SortPanelWrap = styled.div`
   display: flex;
@@ -19,20 +20,35 @@ const SortPanelForm = styled.form`
   display: flex;
   gap: 20px;
 `;
-
-type SortAction = {
-  ():
-    | ReturnType<typeof sortNamesByAlphabet>
-    | ReturnType<typeof sortGenderFemaleFirst>
-    | ReturnType<typeof sortGenderMaleFirst>
-    | ReturnType<typeof sortStatusAliveFirst>
-    | ReturnType<typeof sortStatusDeadFirst>;
+type Character = {
+  id: number;
+  created: string;
+  episode?: string[];
+  gender: string;
+  image: string;
+  location: {
+    name: string;
+    url?: string;
+  };
+  name: string;
+  origin?: {
+    name: string;
+    url: string;
+  };
+  species: string;
+  status: string;
+  type: string;
+  url?: string;
 };
+
+type DataPayloadAction = PayloadAction<Character[]>;
 
 function SortPanel(): ReactElement {
   const dispatch = useAppDispatch();
 
-  const inputHandler = (sortAction: SortAction) => () => dispatch(sortAction());
+  const inputHandler = (dataAction: DataPayloadAction) => () => {
+    dispatch(dataAction);
+  };
 
   return (
     <SortPanelWrap>
@@ -41,7 +57,7 @@ function SortPanel(): ReactElement {
           <input
             type="radio"
             name="sort"
-            onClick={inputHandler(sortNamesByAlphabet)}
+            onClick={inputHandler(setSortDataByAlphabet([]))}
           />
           Sort names by alphabet
         </label>
@@ -49,7 +65,7 @@ function SortPanel(): ReactElement {
           <input
             type="radio"
             name="sort"
-            onClick={inputHandler(sortGenderFemaleFirst)}
+            onClick={inputHandler(setSortDataGenderFemaleFirst([]))}
           />
           Show female characters first
         </label>
@@ -57,7 +73,7 @@ function SortPanel(): ReactElement {
           <input
             type="radio"
             name="sort"
-            onClick={inputHandler(sortGenderMaleFirst)}
+            onClick={inputHandler(setSortDataGenderMaleFirst([]))}
           />
           Show male characters first
         </label>
@@ -65,7 +81,7 @@ function SortPanel(): ReactElement {
           <input
             type="radio"
             name="sort"
-            onClick={inputHandler(sortStatusAliveFirst)}
+            onClick={inputHandler(setSortDataStatusAliveFirst([]))}
           />
           Show alive characters first
         </label>
@@ -73,7 +89,7 @@ function SortPanel(): ReactElement {
           <input
             type="radio"
             name="sort"
-            onClick={inputHandler(sortStatusDeadFirst)}
+            onClick={inputHandler(setSortDataStatusDeadFirst([]))}
           />
           Show dead characters first
         </label>
