@@ -7,6 +7,47 @@ import {
   validateEmail,
   validatePassword,
 } from '@utils/validation/validationUtils';
+import { css, styled } from 'styled-components';
+
+const authSectionStyles = css`
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+`;
+
+const AuthSection = styled.section`
+  ${authSectionStyles}
+`;
+
+const AuthWrapper = styled.div`
+  ${authSectionStyles}
+  border-radius: 12px;
+  margin-top: 40px;
+  max-width: 500px;
+  padding: 20px;
+`;
+
+const AuthTitle = styled.h1`
+  color: #000;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: normal;
+  line-height: normal;
+  margin: 0 0 20px;
+`;
+
+const AuthText = styled.p`
+  color: #929393;
+  font-family: Jost, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: normal;
+  line-height: normal;
+  margin: 20px 0 0;
+`;
 
 interface User {
   email: string;
@@ -106,9 +147,9 @@ const AuthForm: React.FC<AuthFormProps> = ({
   };
 
   return (
-    <section>
-      <div>
-        <h1>{formType === 'signin' ? 'Sign in' : 'Sign up'}</h1>
+    <AuthSection>
+      <AuthWrapper>
+        <AuthTitle>{formType === 'signin' ? 'Sign in' : 'Sign up'}</AuthTitle>
         <Form
           formType={formType}
           userData={userData}
@@ -118,9 +159,9 @@ const AuthForm: React.FC<AuthFormProps> = ({
           buttonText={formType === 'signin' ? 'Login' : 'Sign up'}
           showConfirmPasswordInput={formType === 'signup'}
         />
-        <p>{children}</p>
-      </div>
-    </section>
+        <AuthText>{children}</AuthText>
+      </AuthWrapper>
+    </AuthSection>
   );
 };
 
