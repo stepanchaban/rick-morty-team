@@ -2,6 +2,8 @@ import { ReactElement } from 'react';
 import CommonLayer from './CommonLayer';
 import { Outlet } from 'react-router-dom';
 import styled from 'styled-components';
+import { ErrorBoundary } from 'react-error-boundary';
+import Fallback from './common/Fallback';
 
 const AppWrap = styled.div`
   display: flex;
@@ -14,9 +16,11 @@ const AppWrap = styled.div`
 export function App(): ReactElement {
   return (
     <AppWrap>
-      <CommonLayer>
-        <Outlet />
-      </CommonLayer>
+      <ErrorBoundary FallbackComponent={Fallback}>
+        <CommonLayer>
+          <Outlet />
+        </CommonLayer>
+      </ErrorBoundary>
     </AppWrap>
   );
 }
