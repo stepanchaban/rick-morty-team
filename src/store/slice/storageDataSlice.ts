@@ -9,8 +9,8 @@ const initialState: DataState = {
   data: [],
 };
 
-const manageDataSlice = createSlice({
-  name: 'manageData',
+const storageDataSlice = createSlice({
+  name: 'storage',
   initialState: initialState,
   reducers: {
     setData: (state, action: PayloadAction<Character[]>) => {
@@ -19,6 +19,6 @@ const manageDataSlice = createSlice({
   },
 });
 
-export const { setData } = manageDataSlice.actions;
+export const { setData } = storageDataSlice.actions;
 
-export default manageDataSlice.reducer;
+export default storageDataSlice.reducer;
