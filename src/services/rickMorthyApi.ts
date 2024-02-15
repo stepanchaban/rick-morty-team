@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { Card } from '@projectTypes/Card';
+import { Character } from '@projectTypes/Character';
 
 export const rickMorthyApi = createApi({
   reducerPath: 'rickMorthyApi',
@@ -37,27 +38,6 @@ function filterResponse(response: AllCharactersResponse): Card[] {
     };
   });
 }
-
-type Character = {
-  id: number;
-  created: string;
-  episode?: string[];
-  gender: string;
-  image: string;
-  location: {
-    name: string;
-    url?: string;
-  };
-  name: string;
-  origin?: {
-    name: string;
-    url: string;
-  };
-  species: string;
-  status: string;
-  type: string;
-  url?: string;
-};
 
 type AllCharactersResponse = {
   info: {
