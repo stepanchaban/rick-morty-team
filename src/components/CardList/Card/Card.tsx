@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 import HeartButton from './HeartButton';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { Card as CardType } from '@projectTypes/Card';
 
 const CardWrap = styled.div`
@@ -37,7 +38,14 @@ const CardButton = styled.button`
   }
 `;
 
-function Card({ src, name, species, gender, status }: CardType): ReactElement {
+function Card({
+  src,
+  name,
+  species,
+  gender,
+  status,
+  id,
+}: CardType): ReactElement {
   return (
     <CardWrap>
       <ImageWrap>
@@ -48,7 +56,9 @@ function Card({ src, name, species, gender, status }: CardType): ReactElement {
       <span>Species: {species}</span>
       <span>Gender: {gender}</span>
       <span>Status: {status}</span>
-      <CardButton>More</CardButton>
+      <CardButton>
+        <Link to={`/characters/${id}`}>More</Link>
+      </CardButton>
     </CardWrap>
   );
 }

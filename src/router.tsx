@@ -4,6 +4,7 @@ import Signin from '@pages/signin/Signin';
 import Signup from '@pages/signup/Signup';
 import Favorites from '@pages/favorites/Favorites';
 import History from '@pages/history/History';
+import Character from '@pages/character/Character';
 import { createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
@@ -14,6 +15,14 @@ const router = createBrowserRouter([
       {
         path: '/',
         element: <Main />,
+      },
+      {
+        path: '/characters',
+        element: <Main />,
+      },
+      {
+        path: '/characters/:characterId',
+        element: <Character />,
       },
       {
         path: '/signin',

@@ -27,6 +27,7 @@ function CardList(): ReactElement {
             species={item.species}
             gender={item.gender}
             status={item.status}
+            id={item.id}
           />
         </Fragment>
       );

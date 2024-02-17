@@ -35,6 +35,7 @@ function filterResponse(response: AllCharactersResponse): Card[] {
       species: item.species,
       gender: item.gender,
       status: item.status,
+      id: item.id,
     };
   });
 }

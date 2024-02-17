@@ -4,4 +4,5 @@ export type Card = {
   species: string;
   gender: string;
   status: string;
+  id: number;
 };
