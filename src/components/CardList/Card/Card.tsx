@@ -39,7 +39,7 @@ const CardButton = styled.button`
 `;
 
 function Card({
-  src,
+  image,
   name,
   species,
   gender,
@@ -49,7 +49,7 @@ function Card({
   return (
     <CardWrap>
       <ImageWrap>
-        <img src={src} title="character" />
+        <img src={image} title="character" />
         <HeartButton />
       </ImageWrap>
       <CardTitle>{name}</CardTitle>

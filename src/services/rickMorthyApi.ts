@@ -14,9 +14,9 @@ export const rickMorthyApi = createApi({
       query: name => `character/?name=${name}`,
       transformResponse: filterResponse,
     }),
-    getCharacter: endpointsBuilder.query<Card[], string>({
+    getCharacter: endpointsBuilder.query<Character, string>({
       query: id => `character/${id}`,
-      transformResponse: filterResponse,
+      // transformResponse: filterResponse,
     }),
   }),
 });
@@ -30,7 +30,7 @@ export const {
 function filterResponse(response: AllCharactersResponse): Card[] {
   return response.results.map(item => {
     return {
-      src: item.image,
+      image: item.image,
       name: item.name,
       species: item.species,
       gender: item.gender,

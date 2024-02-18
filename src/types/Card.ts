@@ -1,5 +1,5 @@
 export type Card = {
-  src: string;
+  image: string;
   name: string;
   species: string;
   gender: string;

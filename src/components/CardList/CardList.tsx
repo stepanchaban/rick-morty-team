@@ -22,7 +22,7 @@ function CardList(): ReactElement {
       return (
         <Fragment key={index}>
           <Card
-            src={item.src}
+            image={item.image}
             name={item.name}
             species={item.species}
             gender={item.gender}
