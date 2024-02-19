@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { NavLink } from '@components/styledComponents/Link';
 
 type Props = {
   path: string;
@@ -8,13 +9,12 @@ type Props = {
 };
 
 const CardButton = styled.button`
-  width: 50%;
+  width: 100%;
   background-color: #da9bfa;
   border-radius: 10px;
   border: 2px solid #da9bfa;
   padding: 10px 0;
   cursor: pointer;
-  margin-top: 10px;
   font-size: 20px;
   transition: 0.3s;
   &:hover {
@@ -25,9 +25,9 @@ const CardButton = styled.button`
 
 function PurpleButton({ path, text }: Props): ReactElement {
   return (
-    <CardButton>
-      <Link to={path}>{text}</Link>
-    </CardButton>
+    <NavLink width={'50%'} to={path}>
+      <CardButton>{text}</CardButton>
+    </NavLink>
   );
 }
 
