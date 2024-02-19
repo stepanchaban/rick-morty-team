@@ -1,8 +1,12 @@
 import { ReactElement } from 'react';
 import HeartButton from './HeartButton';
+import PurpleButton from '@components/PurpleButton/PurpleButton';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { Card as CardType } from '@projectTypes/Card';
+
+type CardProps = CardType & {
+  path: string;
+};
 
 const CardWrap = styled.div`
   display: flex;
@@ -22,21 +26,6 @@ const CardTitle = styled.span`
   font-weight: bold;
   font-size: 20px;
 `;
-const CardButton = styled.button`
-  width: 50%;
-  background-color: #da9bfa;
-  border-radius: 10px;
-  border: 2px solid #da9bfa;
-  padding: 10px 0;
-  cursor: pointer;
-  margin-top: 10px;
-  font-size: 20px;
-  transition: 0.3s;
-  &:hover {
-    background-color: transparent;
-    border: 2px solid #da9bfa;
-  }
-`;
 
 function Card({
   image,
@@ -44,8 +33,8 @@ function Card({
   species,
   gender,
   status,
-  id,
-}: CardType): ReactElement {
+  path,
+}: CardProps): ReactElement {
   return (
     <CardWrap>
       <ImageWrap>
@@ -56,9 +45,7 @@ function Card({
       <span>Species: {species}</span>
       <span>Gender: {gender}</span>
       <span>Status: {status}</span>
-      <CardButton>
-        <Link to={`/characters/${id}`}>More</Link>
-      </CardButton>
+      <PurpleButton path={path || ''} />
     </CardWrap>
   );
 }

@@ -19,6 +19,7 @@ function CardList(): ReactElement {
     <div>Loading...</div>
   ) : (
     data?.map((item, index) => {
+      const path = `/characters/${item.id}`;
       return (
         <Fragment key={index}>
           <Card
@@ -28,6 +29,7 @@ function CardList(): ReactElement {
             gender={item.gender}
             status={item.status}
             id={item.id}
+            path={path}
           />
         </Fragment>
       );

@@ -5,7 +5,6 @@ import HeartButton from '@components/CardList/Card/HeartButton';
 import { Block, ColoredBlock } from '@components/styledComponents/Blocks';
 import { BoldText, Text } from '@components/styledComponents/Text';
 import { VerticalSeparator } from '@components/styledComponents/Separators';
-import styled from 'styled-components';
 
 function Character(): ReactElement {
   const { characterId } = useParams();
