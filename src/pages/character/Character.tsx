@@ -16,9 +16,10 @@ function Character(): ReactElement {
   ) : (
     <ColoredBlock
       width={'50%'}
+      height={'50vh'}
       border_radius={'10px'}
       background_color={'white'}
-      gap={'20%'}
+      gap={'10%'}
     >
       <Block width={'auto'} position={'relative'}>
         <img src={data?.image} title="character" />
@@ -44,6 +45,7 @@ function Character(): ReactElement {
       direction="column"
     >
       {content}
+      <VerticalSeparator height={'40px'} />
       <PurpleButton path={'/characters'} text={'Back to characters'} />
     </ColoredBlock>
   );
