@@ -45,7 +45,7 @@ function Card({
       <span>Species: {species}</span>
       <span>Gender: {gender}</span>
       <span>Status: {status}</span>
-      <PurpleButton path={path || ''} />
+      <PurpleButton path={path || ''} text={'More'} />
     </CardWrap>
   );
 }

@@ -5,6 +5,7 @@ import HeartButton from '@components/CardList/Card/HeartButton';
 import { Block, ColoredBlock } from '@components/styledComponents/Blocks';
 import { BoldText, Text } from '@components/styledComponents/Text';
 import { VerticalSeparator } from '@components/styledComponents/Separators';
+import PurpleButton from '@components/PurpleButton/PurpleButton';
 
 function Character(): ReactElement {
   const { characterId } = useParams();
@@ -37,8 +38,13 @@ function Character(): ReactElement {
   );
 
   return (
-    <ColoredBlock height={'80vh'} background_color={'#bbccfb'}>
+    <ColoredBlock
+      height={'80vh'}
+      background_color={'#bbccfb'}
+      direction="column"
+    >
       {content}
+      <PurpleButton path={'/characters'} text={'Back to characters'} />
     </ColoredBlock>
   );
 }

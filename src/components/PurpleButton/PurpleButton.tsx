@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 type Props = {
   path: string;
+  text: string;
 };
 
 const CardButton = styled.button`
@@ -22,10 +23,10 @@ const CardButton = styled.button`
   }
 `;
 
-function PurpleButton({ path }: Props): ReactElement {
+function PurpleButton({ path, text }: Props): ReactElement {
   return (
     <CardButton>
-      <Link to={path}>More</Link>
+      <Link to={path}>{text}</Link>
     </CardButton>
   );
 }
