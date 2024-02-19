@@ -1,19 +1,10 @@
-import { ReactElement } from 'react';
 import CommonLayer from './CommonLayer';
 import { Outlet } from 'react-router-dom';
-import styled from 'styled-components';
 import { ErrorBoundary } from 'react-error-boundary';
 import Fallback from './common/Fallback';
+import { AppWrap } from '@components/styledComponents/App';
 
-const AppWrap = styled.div`
-  display: flex;
-  flex-direction: column;
-  max-width: 100vw;
-  min-height: 100vh;
-  min-width: 375px;
-`;
-
-export function App(): ReactElement {
+export const App: React.FC = () => {
   return (
     <AppWrap>
       <ErrorBoundary FallbackComponent={Fallback}>
@@ -23,4 +14,4 @@ export function App(): ReactElement {
       </ErrorBoundary>
     </AppWrap>
   );
-}
+};

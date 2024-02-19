@@ -1,4 +1,3 @@
-import { ReactElement } from 'react';
 import logo from '@sources/icons/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
@@ -13,7 +12,7 @@ import {
   HeaderWrapper,
 } from '@components/styledComponents/Header';
 
-function Header(): ReactElement {
+const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const auth = useAppSelector(state => state.auth.auth);
   const navigate = useNavigate();
@@ -73,6 +72,6 @@ function Header(): ReactElement {
       </HeaderWrapper>
     </HeaderHead>
   );
-}
+};
 
 export default Header;
