@@ -6,13 +6,14 @@ import { Block, ColoredBlock } from '@components/styledComponents/Blocks';
 import { BoldText, Text } from '@components/styledComponents/Text';
 import { VerticalSeparator } from '@components/styledComponents/Separators';
 import PurpleButton from '@components/PurpleButton/PurpleButton';
+import { LoadingSpinner } from '@components/Loader/LoadingSpinner';
 
 function Character(): ReactElement {
   const { characterId } = useParams();
   const { data, error, isLoading } = useGetCharacterQuery(String(characterId));
 
   const content = isLoading ? (
-    <div>Loading...</div>
+    <LoadingSpinner />
   ) : (
     <ColoredBlock
       width={'50%'}

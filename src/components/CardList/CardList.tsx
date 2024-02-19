@@ -1,6 +1,7 @@
 import { ReactElement, Fragment } from 'react';
 import Card from '@components/CardList/Card/Card';
 import styled from 'styled-components';
+import { LoadingSpinner } from '@components/Loader/LoadingSpinner';
 import { useGetCharactersQuery } from '@services/rickMorthyApi';
 import SortPanel from '../SortPanel/SortPanel';
 
@@ -16,7 +17,7 @@ function CardList(): ReactElement {
   const { data, error, isLoading } = useGetCharactersQuery();
 
   const content = isLoading ? (
-    <div>Loading...</div>
+    <LoadingSpinner />
   ) : (
     data?.map((item, index) => {
       const path = `/characters/${item.id}`;
