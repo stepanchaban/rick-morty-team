@@ -16,7 +16,6 @@ export const rickMorthyApi = createApi({
     }),
     getCharacter: endpointsBuilder.query<Character, string>({
       query: id => `character/${id}`,
-      // transformResponse: filterResponse,
     }),
   }),
 });
