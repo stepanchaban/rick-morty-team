@@ -1,7 +1,8 @@
 export type Card = {
-  src: string;
+  image: string;
   name: string;
   species: string;
   gender: string;
   status: string;
+  id: number;
 };
