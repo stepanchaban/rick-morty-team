@@ -3,6 +3,8 @@ import { Input } from '@components/styledComponents/Input';
 import useDebounce from '@utils/useDebounce';
 import PurpleButton from '@components/PurpleButton/PurpleButton';
 import { VerticalSeparator } from '@components/styledComponents/Separators';
+import { useAppDispatch } from '@hooks/reduxHooks';
+import { setSearchValue } from '@store/slice/searchValueSlice';
 
 const delay = 1000;
 
@@ -17,6 +19,7 @@ const SearchInput = memo(function ({
 }: Props): ReactElement {
   const ref = useRef<HTMLInputElement | null>(null);
   const debouncedOnChange = useDebounce(onChange, delay);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (ref.current && selectedItem.length) {
@@ -33,6 +36,7 @@ const SearchInput = memo(function ({
   function onClick(): void {
     if (ref.current) {
       setNewSearchValue('');
+      dispatch(setSearchValue(ref.current.value));
       ref.current.value = '';
     }
   }

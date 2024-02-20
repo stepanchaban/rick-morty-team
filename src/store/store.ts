@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
 import { rickMorthyApi } from '@services/rickMorthyApi';
 import { authReducer } from './slice/formSlice';
+import searchValueReducer from './slice/searchValueSlice';
 import storageDataReducer from '@store/slice/storageDataSlice';
 
 const store = configureStore({
@@ -9,6 +10,7 @@ const store = configureStore({
     auth: authReducer,
     [rickMorthyApi.reducerPath]: rickMorthyApi.reducer,
     storageData: storageDataReducer,
+    searchValue: searchValueReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(rickMorthyApi.middleware),
