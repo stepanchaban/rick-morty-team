@@ -32,12 +32,6 @@ const storageDataSlice = createSlice({
         state.data = action.payload;
       },
     );
-    builder.addMatcher(
-      rickMorthyApi.endpoints.getCharacter.matchFulfilled,
-      (state, action) => {
-        state.data = action.payload;
-      },
-    );
   },
 });
 
