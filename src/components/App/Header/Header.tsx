@@ -3,7 +3,7 @@ import logo from '@sources/icons/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
 import { setIsAuth } from '@store/slice/formSlice';
-import { useTheme } from '../../../context/ThemeContext';
+import { useTheme } from '@context/ThemeContext';
 import {
   HeaderButton,
   HeaderHead,

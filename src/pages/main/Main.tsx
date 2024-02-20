@@ -3,7 +3,7 @@ import SearchPanel from '@components/Search/SearchPanel';
 import CardList from '@components/CardList/CardList';
 import styled from 'styled-components';
 import { MainBlock } from '@components/styledComponents/Main';
-import { useTheme } from '../../context/ThemeContext';
+import { useTheme } from '@context/ThemeContext';
 import { Theme } from '@projectTypes/index';
 
 const MainContent = styled(MainBlock)<{ theme: Theme }>`

@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom';
 import { ErrorBoundary } from 'react-error-boundary';
 import Fallback from './common/Fallback';
 import { AppWrap } from '@components/styledComponents/App';
-import { ThemeProvider } from '../../context/ThemeContext';
+import { ThemeProvider } from '@context/ThemeContext';
 
 export const App: React.FC = () => {
   return (
