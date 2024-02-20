@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { setData } from '@store/slice/storageDataSlice';
 import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
 import { Card } from '@projectTypes/Card';
+import useDefineCharacterPageParams from '@hooks/useDefineCharacterPageParams';
 
 const SortPanelWrap = styled.div`
   display: flex;
@@ -20,11 +21,12 @@ const SortPanelInput = styled.input`
 
 function SortPanel(): ReactElement {
   const dispatch = useAppDispatch();
-
   const data = useAppSelector(state => state.storageData.data);
+  const navigateToURLWithParams = useDefineCharacterPageParams();
 
   function inputHandler(): void {
     dispatch(setData(sortByName(data)));
+    navigateToURLWithParams('sort', 'aaa');
   }
 
   const labels = [

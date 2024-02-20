@@ -5,6 +5,7 @@ import PurpleButton from '@components/PurpleButton/PurpleButton';
 import { VerticalSeparator } from '@components/styledComponents/Separators';
 import { useAppDispatch } from '@hooks/reduxHooks';
 import { setSearchValue } from '@store/slice/searchValueSlice';
+import useDefineCharacterPageParams from '@hooks/useDefineCharacterPageParams';
 
 const delay = 1000;
 
@@ -20,10 +21,7 @@ const SearchInput = memo(function ({
   const ref = useRef<HTMLInputElement | null>(null);
   const debouncedOnChange = useDebounce(onChange, delay);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    dispatch(setSearchValue(''));
-  }, []);
+  const navigateToURLWithParams = useDefineCharacterPageParams();
 
   useEffect(() => {
     if (ref.current && selectedItem.length) {
@@ -41,6 +39,7 @@ const SearchInput = memo(function ({
     if (ref.current) {
       setNewSearchValue('');
       dispatch(setSearchValue(ref.current.value));
+      navigateToURLWithParams('search', ref.current.value);
     }
   }
 
