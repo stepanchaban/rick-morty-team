@@ -1,21 +1,9 @@
-import { ReactElement } from 'react';
-import styled from 'styled-components';
+import {
+  FallbackWrapper,
+  StyledParagraph,
+} from '@components/styledComponents/Fallback';
 
-const FallbackWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  min-height: 100vh;
-  flex-direction: column;
-  text-align: center;
-`;
-
-const StyledParagraph = styled.p`
-  margin: 10px 0;
-  font-size: 25px;
-  color: red;
-`;
-
-function Fallback(): ReactElement {
+const Fallback: React.FC = () => {
   return (
     <FallbackWrapper>
       <StyledParagraph>Oops... Something went wrong.</StyledParagraph>
@@ -25,6 +13,6 @@ function Fallback(): ReactElement {
       </StyledParagraph>
     </FallbackWrapper>
   );
-}
+};
 
 export default Fallback;
