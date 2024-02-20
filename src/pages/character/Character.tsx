@@ -21,18 +21,16 @@ function Character(): ReactElement {
 
   if (data) {
     content = (
-      <>
-        <CharacterCard
-          image={data.image}
-          name={data.name}
-          created={data.created}
-          species={data.species}
-          gender={data.gender}
-          status={data.status}
-          locationName={data.location.name}
-          origin={data.origin?.name || ''}
-        />
-      </>
+      <CharacterCard
+        image={data.image}
+        name={data.name}
+        created={data.created}
+        species={data.species}
+        gender={data.gender}
+        status={data.status}
+        locationName={data.location.name}
+        origin={data.origin?.name || ''}
+      />
     );
   }
 
