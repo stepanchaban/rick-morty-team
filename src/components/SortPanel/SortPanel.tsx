@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
 import { Card } from '@projectTypes/Card';
 import useDefineCharacterPageParams from '@hooks/useDefineCharacterPageParams';
 import { setSortType, setFirstGroup } from '@store/slice/sortSlice';
+import { helperSort } from '@utils/sorting';
 
 const SortPanelWrap = styled.div`
   display: flex;
@@ -67,21 +68,3 @@ function SortPanel(): ReactElement {
 }
 
 export default SortPanel;
-
-function helperSort(
-  sortType: keyof Card,
-  firstGroup: string,
-  data: Card[],
-): Card[] {
-  const copyData = [...data];
-  copyData.sort((a: Card, b: Card) => {
-    if (a[sortType] === firstGroup && b[sortType] !== firstGroup) {
-      return -1;
-    } else if (a[sortType] !== firstGroup && b[sortType] === firstGroup) {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
-  return copyData;
-}
