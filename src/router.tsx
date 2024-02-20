@@ -5,9 +5,9 @@ import Signup from '@pages/signup/Signup';
 import Favorites from '@pages/favorites/Favorites';
 import History from '@pages/history/History';
 import Character from '@pages/character/Character';
-import { createBrowserRouter } from 'react-router-dom';
+import { createHashRouter } from 'react-router-dom';
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: '/',
     element: <App />,

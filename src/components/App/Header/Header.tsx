@@ -1,72 +1,27 @@
-import { ReactElement } from 'react';
+import React from 'react';
 import logo from '@sources/icons/logo.png';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
 import { setIsAuth } from '@store/slice/formSlice';
-import styled from 'styled-components';
+import { useTheme } from '@context/ThemeContext';
+import {
+  HeaderButton,
+  HeaderHead,
+  HeaderImg,
+  HeaderLink,
+  HeaderNav,
+  HeaderNavWrapper,
+  HeaderNavigationList,
+  HeaderWrapper,
+} from '@components/styledComponents/Header';
+import { ReactComponent as MoonIcon } from '@sources/icons/moon.svg';
+import { ReactComponent as SunIcon } from '@sources/icons/sun.svg';
 
-const HeaderHead = styled.header`
-  background-color: #fdfdff;
-  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
-  flex: 0 1 auto;
-  max-width: 100%;
-  position: relative;
-`;
-
-const HeaderWrapper = styled.div`
-  align-items: center;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  margin: 0 auto;
-  max-width: 1440px;
-  padding: 40px 20px;
-`;
-
-const HeaderImg = styled.img`
-  width: 105px;
-  height: 100px;
-`;
-
-const HeaderNavWrapper = styled.div`
-  align-items: center;
-  display: flex;
-  gap: 30px;
-`;
-
-const HeaderNav = styled.nav`
-  margin-right: 20px;
-`;
-
-const HeaderNavigationList = styled.ul`
-  align-items: center;
-  display: flex;
-  gap: 18px;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-`;
-
-const HeaderLink = styled(Link)`
-  color: #6078ed;
-  font-family: Jost, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  letter-spacing: normal;
-  line-height: normal;
-  padding-bottom: 5px;
-  text-decoration: none;
-  transition: opacity 0.4s ease;
-
-  &:hover {
-    color: #4fb4f5;
-  }
-`;
-
-function Header(): ReactElement {
+const Header: React.FC = () => {
   const dispatch = useAppDispatch();
   const auth = useAppSelector(state => state.auth.auth);
   const navigate = useNavigate();
+  const { theme, toggleTheme } = useTheme();
 
   const handleLogout = (): void => {
     dispatch(setIsAuth(false));
@@ -75,7 +30,7 @@ function Header(): ReactElement {
   };
 
   return (
-    <HeaderHead>
+    <HeaderHead theme={theme}>
       <HeaderWrapper>
         <Link to="/">
           <HeaderImg src={logo}></HeaderImg>
@@ -85,20 +40,23 @@ function Header(): ReactElement {
             <HeaderNav>
               <HeaderNavigationList>
                 <li>
-                  <HeaderLink to="/favorites">
+                  <HeaderLink theme={theme} to="/favorites">
                     <span>Favorite</span>
                   </HeaderLink>
                 </li>
                 <li>
-                  <HeaderLink to="/history">
+                  <HeaderLink theme={theme} to="/history">
                     <span>History</span>
                   </HeaderLink>
                 </li>
                 <li>
-                  <HeaderLink to="/">
+                  <HeaderLink theme={theme} to="/">
                     <span onClick={handleLogout}>Log out</span>
                   </HeaderLink>
                 </li>
+                <HeaderButton onClick={toggleTheme}>
+                  {theme === 'light' ? <SunIcon /> : <MoonIcon />}
+                </HeaderButton>
               </HeaderNavigationList>
             </HeaderNav>
           </HeaderNavWrapper>
@@ -107,15 +65,18 @@ function Header(): ReactElement {
             <HeaderNav>
               <HeaderNavigationList>
                 <li>
-                  <HeaderLink to="/signin">
+                  <HeaderLink theme={theme} to="/signin">
                     <span>Log In</span>
                   </HeaderLink>
                 </li>
                 <li>
-                  <HeaderLink to="/signup">
+                  <HeaderLink theme={theme} to="/signup">
                     <span>Sign up</span>
                   </HeaderLink>
                 </li>
+                <HeaderButton onClick={toggleTheme}>
+                  {theme === 'light' ? <SunIcon /> : <MoonIcon />}
+                </HeaderButton>
               </HeaderNavigationList>
             </HeaderNav>
           </HeaderNavWrapper>
@@ -123,6 +84,6 @@ function Header(): ReactElement {
       </HeaderWrapper>
     </HeaderHead>
   );
-}
+};
 
 export default Header;
