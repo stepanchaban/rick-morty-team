@@ -5,6 +5,7 @@ import { Character } from '@projectTypes/Character';
 export const rickMorthyApi = createApi({
   reducerPath: 'rickMorthyApi',
   baseQuery: fetchBaseQuery({ baseUrl: 'https://rickandmortyapi.com/api' }),
+  keepUnusedDataFor: 0,
   endpoints: endpointsBuilder => ({
     getCharacters: endpointsBuilder.query<Card[], string>({
       query: characterName => ({
