@@ -4,6 +4,7 @@ import { rickMorthyApi } from '@services/rickMorthyApi';
 import { authReducer } from './slice/formSlice';
 import searchValueReducer from './slice/searchValueSlice';
 import storageDataReducer from '@store/slice/storageDataSlice';
+import sortSliceReducer from './slice/sortSlice';
 
 const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ const store = configureStore({
     [rickMorthyApi.reducerPath]: rickMorthyApi.reducer,
     storageData: storageDataReducer,
     searchValue: searchValueReducer,
+    sort: sortSliceReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(rickMorthyApi.middleware),

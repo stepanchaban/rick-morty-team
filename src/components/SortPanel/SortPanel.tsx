@@ -4,6 +4,7 @@ import { setData } from '@store/slice/storageDataSlice';
 import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
 import { Card } from '@projectTypes/Card';
 import useDefineCharacterPageParams from '@hooks/useDefineCharacterPageParams';
+import { setSortType, setFirstGroup } from '@store/slice/sortSlice';
 
 const SortPanelWrap = styled.div`
   display: flex;
@@ -38,6 +39,8 @@ function SortPanel(): ReactElement {
   function inputHandler(type: keyof Card, firstGroup: string): void {
     dispatch(setData(helperSort(type, firstGroup, data)));
     navigateToURLWithParams('sort', firstGroup);
+    dispatch(setSortType(type));
+    dispatch(setFirstGroup(firstGroup));
   }
 
   const radioInputs = sortInfo.map((sort, index) => {
