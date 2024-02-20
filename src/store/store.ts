@@ -4,6 +4,7 @@ import { rickMorthyApi } from '@services/rickMorthyApi';
 import { authReducer } from './slice/formSlice';
 import searchValueReducer from './slice/searchValueSlice';
 import storageDataReducer from '@store/slice/storageDataSlice';
+import searchValueMiddleware from './slice/middleware';
 
 const store = configureStore({
   reducer: {
@@ -13,7 +14,10 @@ const store = configureStore({
     searchValue: searchValueReducer,
   },
   middleware: getDefaultMiddleware =>
-    getDefaultMiddleware().concat(rickMorthyApi.middleware),
+    getDefaultMiddleware().concat(
+      rickMorthyApi.middleware,
+      searchValueMiddleware.middleware,
+    ),
 });
 
 setupListeners(store.dispatch);

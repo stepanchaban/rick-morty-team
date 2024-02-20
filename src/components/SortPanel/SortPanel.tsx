@@ -60,7 +60,6 @@ export default SortPanel;
 function sortByName(data: Card[]): Card[] {
   const copyData = [...data];
   const sortedData = copyData.sort((characterA, characterB) => {
-    console.log(characterA);
     return characterA.name > characterB.name ? 1 : -1;
   });
   return sortedData;

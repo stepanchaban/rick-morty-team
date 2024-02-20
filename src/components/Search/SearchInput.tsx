@@ -22,6 +22,10 @@ const SearchInput = memo(function ({
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    dispatch(setSearchValue(''));
+  }, []);
+
+  useEffect(() => {
     if (ref.current && selectedItem.length) {
       ref.current.value = selectedItem;
     }

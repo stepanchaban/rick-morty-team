@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Character } from '@projectTypes/Character';
 import { Card } from '@projectTypes/Card';
 import { rickMorthyApi } from '@services/rickMorthyApi';
 

@@ -1,4 +1,4 @@
-import { ReactElement, Fragment } from 'react';
+import { ReactElement, Fragment, useEffect } from 'react';
 import Card from '@components/CardList/Card/Card';
 import styled from 'styled-components';
 import { LoadingSpinner } from '@components/Loader/LoadingSpinner';
@@ -15,8 +15,8 @@ const CardListContent = styled.div`
 `;
 
 function CardList(): ReactElement {
-  const searchValue = useAppSelector(state => state.searchValue.searchValue);
-  const { isError, isLoading } = useGetCharactersQuery(searchValue);
+  // const searchValue = useAppSelector(state => state.searchValue.searchValue);
+  // const { isError, isLoading } = useGetCharactersQuery(searchValue);
   const storageData = useAppSelector(state => state.storageData.data);
 
   let content;
@@ -40,13 +40,13 @@ function CardList(): ReactElement {
     });
   }
 
-  if (isLoading) {
-    content = <LoadingSpinner />;
-  }
+  // if (isLoading) {
+  //   content = <LoadingSpinner />;
+  // }
 
-  if (isError) {
-    content = <Error />;
-  }
+  // if (isError) {
+  //   content = <Error />;
+  // }
 
   return (
     <>
