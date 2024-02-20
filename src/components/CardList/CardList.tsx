@@ -1,10 +1,11 @@
-import { ReactElement, Fragment } from 'react';
+import { ReactElement, Fragment, useEffect } from 'react';
 import Card from '@components/CardList/Card/Card';
 import styled from 'styled-components';
 import { LoadingSpinner } from '@components/Loader/LoadingSpinner';
 import { useGetCharactersQuery } from '@services/rickMorthyApi';
 import SortPanel from '../SortPanel/SortPanel';
 import Error from '@components/Error/Error';
+import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
 
 const CardListContent = styled.div`
   display: flex;
@@ -15,7 +16,8 @@ const CardListContent = styled.div`
 `;
 
 function CardList(): ReactElement {
-  const { data, isError, isLoading } = useGetCharactersQuery();
+  const searchValue = useAppSelector(state => state.searchValue.searchValue);
+  const { data, isError, isLoading } = useGetCharactersQuery(searchValue);
 
   let content;
 
