@@ -1,11 +1,11 @@
-import { ReactElement, Fragment, useEffect } from 'react';
+import { ReactElement, Fragment } from 'react';
 import Card from '@components/CardList/Card/Card';
 import styled from 'styled-components';
 import { LoadingSpinner } from '@components/Loader/LoadingSpinner';
 import { useGetCharactersQuery } from '@services/rickMorthyApi';
 import SortPanel from '../SortPanel/SortPanel';
 import Error from '@components/Error/Error';
-import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
+import { useAppSelector } from '@hooks/reduxHooks';
 
 const CardListContent = styled.div`
   display: flex;

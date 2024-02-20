@@ -37,7 +37,6 @@ const SearchInput = memo(function ({
     if (ref.current) {
       setNewSearchValue('');
       dispatch(setSearchValue(ref.current.value));
-      ref.current.value = '';
     }
   }
 
