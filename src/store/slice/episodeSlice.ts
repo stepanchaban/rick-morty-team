@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-// import { Character } from '@projectTypes/Character';
 type EpisodeCard = {
   id: number;
   name: string;
