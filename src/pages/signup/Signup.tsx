@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import AuthForm from '@components/App/common/AuthForm';
-import { AuthLink } from '@components/styledComponents/Link';
+import { AuthLink } from '@components/styledComponents/AuthLink';
 
 function Signup(): ReactElement {
   return (
