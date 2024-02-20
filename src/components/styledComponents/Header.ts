@@ -1,8 +1,10 @@
+import { ThemeProps } from '@projectTypes/index';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const HeaderHead = styled.header`
-  background-color: #fdfdff;
+export const HeaderHead = styled.header<ThemeProps>`
+  background-color: ${({ theme = 'light' }): string =>
+    theme === 'light' ? '#fdfdff' : '#565656'};
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
   flex: 0 1 auto;
   max-width: 100%;
@@ -43,8 +45,9 @@ export const HeaderNavigationList = styled.ul`
   padding: 0;
 `;
 
-export const HeaderLink = styled(Link)`
-  color: #6078ed;
+export const HeaderLink = styled(Link)<ThemeProps>`
+  color: ${({ theme = 'light' }): string =>
+    theme === 'light' ? '#6078ed ' : '#fff '};
   font-family: Jost, Helvetica, Arial, sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -53,8 +56,25 @@ export const HeaderLink = styled(Link)`
   padding-bottom: 5px;
   text-decoration: none;
   transition: opacity 0.4s ease;
-
   &:hover {
     color: #4fb4f5;
+  }
+`;
+
+export const HeaderButton = styled.button`
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  height: 30px;
+  justify-content: center;
+  width: 30px;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.8s ease;
+
+  &:hover {
+    background-color: lightgray;
   }
 `;
