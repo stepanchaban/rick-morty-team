@@ -6,21 +6,18 @@ import {
   createAction,
 } from '@reduxjs/toolkit';
 import { setEpisodes } from '@store/slice/episodeSlice';
+import { Character } from '@projectTypes/Character';
 
-type TypedAction = {
-  episode: string[];
-  id: number;
-  type: string;
-};
-
-const executeQueryFulfilled = createAction<TypedAction>(
+const executeQueryFulfilled = createAction<Character>(
   'rickMorthyApi/executeQuery/fulfilled',
 );
 
 const customMiddleware: Middleware = api => next => action => {
   const response = next(action);
   if (executeQueryFulfilled.match(action)) {
-    void loadEpisodesData(api, action.payload.episode);
+    if (action.payload.id) {
+      void loadEpisodesData(api, action.payload.episode);
+    }
   }
   return response;
 };
