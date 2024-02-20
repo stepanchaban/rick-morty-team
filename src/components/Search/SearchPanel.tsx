@@ -31,7 +31,7 @@ function SearchPanel(): ReactElement {
   ]);
 
   return (
-    <Block width={'30%'}>
+    <Block width={'40%'}>
       <SearchInput
         setNewSearchValue={memoizedSetNewSearchValue}
         selectedItem={selectedItem}

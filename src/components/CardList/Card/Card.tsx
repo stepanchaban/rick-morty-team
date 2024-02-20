@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import HeartButton from './HeartButton';
-import PurpleButton from '@components/PurpleButton/PurpleButton';
+import PurpleButtonLink from '@components/PurpleButton/PurpleButtonLink';
 import styled from 'styled-components';
 import { Card as CardType } from '@projectTypes/Card';
 
@@ -45,7 +45,7 @@ function Card({
       <span>Species: {species}</span>
       <span>Gender: {gender}</span>
       <span>Status: {status}</span>
-      <PurpleButton path={path || ''} text={'More'} />
+      <PurpleButtonLink path={path || ''} text={'More'} />
     </CardWrap>
   );
 }

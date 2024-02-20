@@ -5,7 +5,7 @@ import HeartButton from '@components/CardList/Card/HeartButton';
 import { Block, ColoredBlock } from '@components/styledComponents/Blocks';
 import { BoldText, Text } from '@components/styledComponents/Text';
 import { VerticalSeparator } from '@components/styledComponents/Separators';
-import PurpleButton from '@components/PurpleButton/PurpleButton';
+import PurpleButtonLink from '@components/PurpleButton/PurpleButtonLink';
 import { LoadingSpinner } from '@components/Loader/LoadingSpinner';
 import Error from '@components/Error/Error';
 
@@ -48,7 +48,7 @@ function Character(): ReactElement {
     >
       {content}
       <VerticalSeparator height={'40px'} />
-      <PurpleButton path={'/characters'} text={'Back to characters'} />
+      <PurpleButtonLink path={'/characters'} text={'Back to characters'} />
     </ColoredBlock>
   );
 }

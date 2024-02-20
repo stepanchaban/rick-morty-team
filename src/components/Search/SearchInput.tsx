@@ -1,6 +1,8 @@
 import { ReactElement, memo, useEffect, useRef } from 'react';
 import { Input } from '@components/styledComponents/Input';
 import useDebounce from '@utils/useDebounce';
+import PurpleButton from '@components/PurpleButton/PurpleButton';
+import { VerticalSeparator } from '@components/styledComponents/Separators';
 
 const delay = 1000;
 
@@ -28,13 +30,28 @@ const SearchInput = memo(function ({
     }
   }
 
+  function onClick(): void {
+    if (ref.current) {
+      setNewSearchValue('');
+      ref.current.value = '';
+    }
+  }
+
   return (
-    <Input
-      onChange={debouncedOnChange}
-      ref={ref}
-      type="text"
-      placeholder="Type something..."
-    />
+    <>
+      <Input
+        onChange={debouncedOnChange}
+        ref={ref}
+        type="text"
+        placeholder="Type something..."
+      />
+      <VerticalSeparator width={'10px'} />
+      <PurpleButton
+        onClickHandler={onClick}
+        text={'Search'}
+        styles={{ width: '30%' }}
+      />
+    </>
   );
 });
 
