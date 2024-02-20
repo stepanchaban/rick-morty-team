@@ -3,7 +3,6 @@ import Card from '@components/CardList/Card/Card';
 import styled from 'styled-components';
 import { LoadingSpinner } from '@components/Loader/LoadingSpinner';
 import { useGetCharactersQuery } from '@services/rickMorthyApi';
-import SortPanel from '../SortPanel/SortPanel';
 import Error from '@components/Error/Error';
 import { useAppSelector } from '@hooks/reduxHooks';
 
@@ -17,12 +16,13 @@ const CardListContent = styled.div`
 
 function CardList(): ReactElement {
   const searchValue = useAppSelector(state => state.searchValue.searchValue);
-  const { data, isError, isLoading } = useGetCharactersQuery(searchValue);
+  const { isError, isLoading } = useGetCharactersQuery(searchValue);
+  const storageData = useAppSelector(state => state.storageData.data);
 
   let content;
 
-  if (data) {
-    content = data.map((item, index) => {
+  if (storageData) {
+    content = storageData.map((item, index) => {
       const path = `/characters/${item.id}`;
       return (
         <Fragment key={index}>
@@ -50,7 +50,6 @@ function CardList(): ReactElement {
 
   return (
     <>
-      <SortPanel />
       <CardListContent>{content}</CardListContent>
     </>
   );

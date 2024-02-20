@@ -2,6 +2,7 @@ import { ReactElement } from 'react';
 import styled from 'styled-components';
 import { setData } from '@store/slice/storageDataSlice';
 import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
+import { Card } from '@projectTypes/Card';
 
 const SortPanelWrap = styled.div`
   display: flex;
@@ -23,7 +24,7 @@ function SortPanel(): ReactElement {
   const data = useAppSelector(state => state.storageData.data);
 
   function inputHandler(): void {
-    dispatch(setData(data));
+    dispatch(setData(sortByName(data)));
   }
 
   const labels = [
@@ -55,3 +56,12 @@ function SortPanel(): ReactElement {
 }
 
 export default SortPanel;
+
+function sortByName(data: Card[]): Card[] {
+  const copyData = [...data];
+  const sortedData = copyData.sort((characterA, characterB) => {
+    console.log(characterA);
+    return characterA.name > characterB.name ? 1 : -1;
+  });
+  return sortedData;
+}
