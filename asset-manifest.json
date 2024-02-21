@@ -1,18 +1,18 @@
 {
   "files": {
     "main.css": "/rick-morty-team/static/css/main.9f088a99.css",
-    "main.js": "/rick-morty-team/static/js/main.4180379e.js",
+    "main.js": "/rick-morty-team/static/js/main.d4447dbc.js",
     "static/media/error-image.png": "/rick-morty-team/static/media/error-image.885a2153214557e5bd15.png",
     "static/media/logo.png": "/rick-morty-team/static/media/logo.499c4091a07c0fe5bc78.png",
     "static/media/sun.svg": "/rick-morty-team/static/media/sun.5b97b4bd758253f898cfe3bcd0ebac9b.svg",
     "index.html": "/rick-morty-team/index.html",
-    "static/media/favorite-heart-circle.svg": "/rick-morty-team/static/media/favorite-heart-circle.1bbd9ea94ff3b27727ca960f1ec24375.svg",
+    "static/media/favorite-heart-circle.svg": "/rick-morty-team/static/media/favorite-heart-circle.b56f8955f1f78b9683cf8b9175564ac2.svg",
     "static/media/moon.svg": "/rick-morty-team/static/media/moon.c8f7733799e795d567fe9094a39c0bfd.svg",
     "main.9f088a99.css.map": "/rick-morty-team/static/css/main.9f088a99.css.map",
-    "main.4180379e.js.map": "/rick-morty-team/static/js/main.4180379e.js.map"
+    "main.d4447dbc.js.map": "/rick-morty-team/static/js/main.d4447dbc.js.map"
   },
   "entrypoints": [
     "static/css/main.9f088a99.css",
-    "static/js/main.4180379e.js"
+    "static/js/main.d4447dbc.js"
   ]
 }
