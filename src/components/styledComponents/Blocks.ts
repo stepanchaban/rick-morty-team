@@ -33,6 +33,19 @@ export const ColoredAbsoluteBlock = styled(AbsoluteBlock)<ColoredBlock>`
   box-shadow: ${props => props.box_shadow};
 `;
 
+export const ScrollBlock = styled(Block)<ScrollBlock>`
+  overflow: ${props => props.overflow || 'auto'};
+  &::-webkit-scrollbar {
+    width: 10px;
+    background-color: #f9f9fd;
+    border-radius: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: #da9bfa;
+    border-radius: 5px;
+  }
+`;
+
 type BlockProps = {
   width?: string;
   height?: string;
@@ -57,4 +70,8 @@ type AbsoluteBlock = {
 type ColoredBlock = {
   background_color?: string;
   box_shadow?: string;
+};
+
+type ScrollBlock = {
+  overflow?: string;
 };

@@ -8,12 +8,14 @@ import { VerticalSeparator } from '@components/styledComponents/Separators';
 import PurpleButton from '@components/PurpleButton/PurpleButton';
 import { LoadingSpinner } from '@components/Loader/LoadingSpinner';
 import Error from '@components/Error/Error';
+import EpisodesList from '@components/EpisodesList/EpisodesList';
 
 function Character(): ReactElement {
   const navigate = useNavigate();
   const { characterId } = useParams();
   const { data, isError, isLoading } = useGetCharacterQuery(
     String(characterId),
+    { refetchOnMountOrArgChange: true },
   );
 
   let content;
@@ -53,6 +55,7 @@ function Character(): ReactElement {
     >
       {content}
       <VerticalSeparator height={'40px'} />
+      <EpisodesList />
       <PurpleButton
         onClickHandler={handleButtonClick}
         text={'Back to characters'}
