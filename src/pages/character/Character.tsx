@@ -25,16 +25,19 @@ function Character(): ReactElement {
 
   if (data) {
     content = (
-      <CharacterCard
-        image={data.image}
-        name={data.name}
-        created={data.created}
-        species={data.species}
-        gender={data.gender}
-        status={data.status}
-        locationName={data.location.name}
-        origin={data.origin?.name || ''}
-      />
+      <>
+        <CharacterCard
+          image={data.image}
+          name={data.name}
+          created={data.created}
+          species={data.species}
+          gender={data.gender}
+          status={data.status}
+          locationName={data.location.name}
+          origin={data.origin?.name || ''}
+        />
+        <EpisodesList />
+      </>
     );
   }
 
@@ -56,15 +59,12 @@ function Character(): ReactElement {
       background_color={'#bbccfb'}
       direction="column"
     >
-      <Block width={'70%'}>
-        {content}
-        <EpisodesList />
-      </Block>
+      <Block width={'70%'}>{content}</Block>
       <HorizontalSeparator height={'20px'} />
       <PurpleButton
-        styles={{ width: '40%' }}
+        styles={{ width: '20%' }}
         onClickHandler={handleButtonClick}
-        text={'Back to characters'}
+        text={'Back'}
       />
     </ColoredBlock>
   );
