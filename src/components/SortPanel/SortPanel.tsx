@@ -48,8 +48,8 @@ function SortPanel(): ReactElement {
         <SortPanelInput
           type="radio"
           name="sort"
-          onClick={inputHandlerWrapper}
-          defaultChecked={firstGroup === sort.firstGroup}
+          onChange={inputHandlerWrapper}
+          checked={firstGroup === sort.firstGroup}
         ></SortPanelInput>
         {sort.text}
       </label>

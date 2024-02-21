@@ -28,7 +28,7 @@ const SearchInput = memo(function ({
     if (ref.current) {
       ref.current.value = searchValue;
     }
-  }, []);
+  }, [searchValue]);
 
   useEffect(() => {
     if (ref.current && selectedItem.length) {
