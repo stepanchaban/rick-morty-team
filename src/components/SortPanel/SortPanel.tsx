@@ -1,11 +1,8 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import { setData } from '@store/slice/storageDataSlice';
-import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
-import { Card } from '@projectTypes/Card';
+import { useAppDispatch } from '@hooks/reduxHooks';
 import useDefineCharacterPageParams from '@hooks/useDefineCharacterPageParams';
-import { setSortType, setFirstGroup } from '@store/slice/sortSlice';
-import { helperSort } from '@utils/sorting';
+import { setFirstGroup } from '@store/slice/sortSlice';
 
 const SortPanelWrap = styled.div`
   display: flex;
@@ -21,32 +18,29 @@ const SortPanelInput = styled.input`
   margin-right: 5px;
 `;
 
-const sortInfo: { text: string; type: keyof Card; firstGroup: string }[] = [
+const sortInfo: { text: string; firstGroup: string }[] = [
+  { text: 'Reset sorting', firstGroup: '' },
   {
     text: 'Show female characters first',
-    type: 'gender',
     firstGroup: 'Female',
   },
-  { text: 'Show male characters first', type: 'gender', firstGroup: 'Male' },
-  { text: 'Show alive characters first', type: 'status', firstGroup: 'Alive' },
-  { text: 'Show dead characters first', type: 'status', firstGroup: 'Dead' },
+  { text: 'Show male characters first', firstGroup: 'Male' },
+  { text: 'Show alive characters first', firstGroup: 'Alive' },
+  { text: 'Show dead characters first', firstGroup: 'Dead' },
 ];
 
 function SortPanel(): ReactElement {
   const dispatch = useAppDispatch();
-  const data = useAppSelector(state => state.storageData.data);
   const navigateToURLWithParams = useDefineCharacterPageParams();
 
-  function inputHandler(type: keyof Card, firstGroup: string): void {
-    dispatch(setData(helperSort(type, firstGroup, data)));
+  function inputHandler(firstGroup: string): void {
     navigateToURLWithParams('sort', firstGroup);
-    dispatch(setSortType(type));
     dispatch(setFirstGroup(firstGroup));
   }
 
   const radioInputs = sortInfo.map((sort, index) => {
     const inputHandlerWrapper = (): void => {
-      inputHandler(sort.type, sort.firstGroup);
+      inputHandler(sort.firstGroup);
     };
     return (
       <label key={index}>

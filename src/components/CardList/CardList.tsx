@@ -1,10 +1,11 @@
-import { ReactElement, Fragment, useEffect } from 'react';
+import { ReactElement, Fragment } from 'react';
 import Card from '@components/CardList/Card/Card';
 import styled from 'styled-components';
 import { LoadingSpinner } from '@components/Loader/LoadingSpinner';
 import { useGetCharactersQuery } from '@services/rickMorthyApi';
 import Error from '@components/Error/Error';
 import { useAppSelector } from '@hooks/reduxHooks';
+import { helperSort } from '@utils/sorting';
 
 const CardListContent = styled.div`
   display: flex;
@@ -17,12 +18,15 @@ const CardListContent = styled.div`
 function CardList(): ReactElement {
   const searchValue = useAppSelector(state => state.searchValue.searchValue);
   const { isError, isLoading } = useGetCharactersQuery(searchValue);
+  const firstGroup = useAppSelector(state => state.sort.firstGroup);
   const storageData = useAppSelector(state => state.storageData.data);
 
   let content;
 
-  if (storageData) {
-    content = storageData.map((item, index) => {
+  const sortedData = helperSort(firstGroup, storageData);
+
+  if (sortedData) {
+    content = sortedData.map((item, index) => {
       const path = `/characters/${item.id}`;
       return (
         <Fragment key={index}>
