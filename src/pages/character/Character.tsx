@@ -1,15 +1,16 @@
 import { ReactElement } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useGetCharacterQuery } from '@services/rickMorthyApi';
 import HeartButton from '@components/CardList/Card/HeartButton';
 import { Block, ColoredBlock } from '@components/styledComponents/Blocks';
 import { BoldText, Text } from '@components/styledComponents/Text';
 import { VerticalSeparator } from '@components/styledComponents/Separators';
-import PurpleButtonLink from '@components/PurpleButton/PurpleButtonLink';
+import PurpleButton from '@components/PurpleButton/PurpleButton';
 import { LoadingSpinner } from '@components/Loader/LoadingSpinner';
 import Error from '@components/Error/Error';
 
 function Character(): ReactElement {
+  const navigate = useNavigate();
   const { characterId } = useParams();
   const { data, isError, isLoading } = useGetCharacterQuery(
     String(characterId),
@@ -40,6 +41,10 @@ function Character(): ReactElement {
     content = <LoadingSpinner />;
   }
 
+  function handleButtonClick(): void {
+    navigate(-1);
+  }
+
   return (
     <ColoredBlock
       height={'80vh'}
@@ -48,7 +53,10 @@ function Character(): ReactElement {
     >
       {content}
       <VerticalSeparator height={'40px'} />
-      <PurpleButtonLink path={'/characters'} text={'Back to characters'} />
+      <PurpleButton
+        onClickHandler={handleButtonClick}
+        text={'Back to characters'}
+      />
     </ColoredBlock>
   );
 }
