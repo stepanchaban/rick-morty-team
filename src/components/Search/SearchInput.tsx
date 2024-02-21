@@ -3,7 +3,7 @@ import { Input } from '@components/styledComponents/Input';
 import useDebounce from '@utils/useDebounce';
 import PurpleButton from '@components/PurpleButton/PurpleButton';
 import { VerticalSeparator } from '@components/styledComponents/Separators';
-import { useAppDispatch } from '@hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
 import { setSearchValue } from '@store/slice/searchValueSlice';
 import useDefineCharacterPageParams from '@hooks/useDefineCharacterPageParams';
 
@@ -21,7 +21,14 @@ const SearchInput = memo(function ({
   const ref = useRef<HTMLInputElement | null>(null);
   const debouncedOnChange = useDebounce(onChange, delay);
   const dispatch = useAppDispatch();
+  const searchValue = useAppSelector(state => state.searchValue.searchValue);
   const navigateToURLWithParams = useDefineCharacterPageParams();
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.value = searchValue;
+    }
+  }, []);
 
   useEffect(() => {
     if (ref.current && selectedItem.length) {

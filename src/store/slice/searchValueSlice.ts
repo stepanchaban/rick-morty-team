@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { extractQueryParams } from '@utils/extractQueryParams';
 
 const initialState = {
-  searchValue: '',
+  searchValue: extractQueryParams('search'),
 };
 
 const searchValueSlice = createSlice({

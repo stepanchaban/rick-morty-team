@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { extractQueryParams } from '@utils/extractQueryParams';
 
 type initialStateType = {
   firstGroup: string;
 };
 
 export const initialState: initialStateType = {
-  firstGroup: '',
+  firstGroup: extractQueryParams('sort'),
 };
 
 const sortSlice = createSlice({

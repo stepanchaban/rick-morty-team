@@ -23,9 +23,8 @@ function CardList(): ReactElement {
 
   let content;
 
-  const sortedData = helperSort(firstGroup, storageData);
-
-  if (sortedData) {
+  if (storageData) {
+    const sortedData = helperSort(firstGroup, storageData);
     content = sortedData.map((item, index) => {
       const path = `/characters/${item.id}`;
       return (

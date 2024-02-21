@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import { useAppDispatch } from '@hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
 import useDefineCharacterPageParams from '@hooks/useDefineCharacterPageParams';
 import { setFirstGroup } from '@store/slice/sortSlice';
 
@@ -31,6 +31,7 @@ const sortInfo: { text: string; firstGroup: string }[] = [
 
 function SortPanel(): ReactElement {
   const dispatch = useAppDispatch();
+  const firstGroup = useAppSelector(state => state.sort.firstGroup);
   const navigateToURLWithParams = useDefineCharacterPageParams();
 
   function inputHandler(firstGroup: string): void {
@@ -48,12 +49,12 @@ function SortPanel(): ReactElement {
           type="radio"
           name="sort"
           onClick={inputHandlerWrapper}
+          defaultChecked={firstGroup === sort.firstGroup}
         ></SortPanelInput>
         {sort.text}
       </label>
     );
   });
-
   return (
     <SortPanelWrap>
       <SortPanelForm>{radioInputs}</SortPanelForm>
