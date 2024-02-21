@@ -1,8 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Character } from '@projectTypes/Character';
+import { Card } from '@projectTypes/Card';
+import { rickMorthyApi } from '@services/rickMorthyApi';
 
 type DataState = {
-  data: Character[];
+  data: Card[];
 };
 
 const initialState: DataState = {
@@ -13,9 +14,23 @@ const storageDataSlice = createSlice({
   name: 'storage',
   initialState: initialState,
   reducers: {
-    setData: (state, action: PayloadAction<Character[]>) => {
+    setData: (state, action: PayloadAction<Card[]>) => {
       state.data = action.payload;
     },
+  },
+  extraReducers(builder) {
+    builder.addMatcher(
+      rickMorthyApi.endpoints.getCharacters.matchFulfilled,
+      (state, action) => {
+        state.data = action.payload;
+      },
+    );
+    builder.addMatcher(
+      rickMorthyApi.endpoints.getFilteredCharacters.matchFulfilled,
+      (state, action) => {
+        state.data = action.payload;
+      },
+    );
   },
 });
 

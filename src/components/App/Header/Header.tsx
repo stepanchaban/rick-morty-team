@@ -16,6 +16,8 @@ import {
 } from '@components/styledComponents/Header';
 import { ReactComponent as MoonIcon } from '@sources/icons/moon.svg';
 import { ReactComponent as SunIcon } from '@sources/icons/sun.svg';
+import { setSearchValue } from '@store/slice/searchValueSlice';
+import { setFirstGroup } from '@store/slice/sortSlice';
 
 const Header: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -29,10 +31,15 @@ const Header: React.FC = () => {
     navigate('/');
   };
 
+  const handleLogoOnClick = (): void => {
+    dispatch(setSearchValue(''));
+    dispatch(setFirstGroup(''));
+  };
+
   return (
     <HeaderHead theme={theme}>
       <HeaderWrapper>
-        <Link to="/">
+        <Link onClick={handleLogoOnClick} to="/">
           <HeaderImg src={logo}></HeaderImg>
         </Link>
         {auth ? (

@@ -1,7 +1,8 @@
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import { setData } from '@store/slice/storageDataSlice';
 import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
+import useDefineCharacterPageParams from '@hooks/useDefineCharacterPageParams';
+import { setFirstGroup } from '@store/slice/sortSlice';
 
 const SortPanelWrap = styled.div`
   display: flex;
@@ -17,36 +18,43 @@ const SortPanelInput = styled.input`
   margin-right: 5px;
 `;
 
+const sortInfo: { text: string; firstGroup: string }[] = [
+  { text: 'Reset sorting', firstGroup: '' },
+  {
+    text: 'Show female characters first',
+    firstGroup: 'Female',
+  },
+  { text: 'Show male characters first', firstGroup: 'Male' },
+  { text: 'Show alive characters first', firstGroup: 'Alive' },
+  { text: 'Show dead characters first', firstGroup: 'Dead' },
+];
+
 function SortPanel(): ReactElement {
   const dispatch = useAppDispatch();
+  const firstGroup = useAppSelector(state => state.sort.firstGroup);
+  const navigateToURLWithParams = useDefineCharacterPageParams();
 
-  const data = useAppSelector(state => state.storageData.data);
-
-  function inputHandler(): void {
-    dispatch(setData(data));
+  function inputHandler(firstGroup: string): void {
+    navigateToURLWithParams('sort', firstGroup);
+    dispatch(setFirstGroup(firstGroup));
   }
 
-  const labels = [
-    'Sort names by alphabet',
-    'Show female characters first',
-    'Show male characters first',
-    'Show alive characters first',
-    'Show dead characters first',
-  ];
-
-  const radioInputs = labels.map((label, index) => {
+  const radioInputs = sortInfo.map((sort, index) => {
+    const inputHandlerWrapper = (): void => {
+      inputHandler(sort.firstGroup);
+    };
     return (
       <label key={index}>
         <SortPanelInput
           type="radio"
           name="sort"
-          onClick={inputHandler}
+          onChange={inputHandlerWrapper}
+          checked={firstGroup === sort.firstGroup}
         ></SortPanelInput>
-        {label}
+        {sort.text}
       </label>
     );
   });
-
   return (
     <SortPanelWrap>
       <SortPanelForm>{radioInputs}</SortPanelForm>

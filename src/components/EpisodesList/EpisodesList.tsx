@@ -34,8 +34,7 @@ function EpisodesList(): ReactElement {
           <BoldText font_size={'24px'}>Related episodes:</BoldText>
           <ScrollBlock
             direction={'column'}
-            height={'300px'}
-            width={'50%'}
+            height={'47vh'}
             gap={'10px'}
             justify_content={'flex-start'}
           >

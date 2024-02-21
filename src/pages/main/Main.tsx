@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 import SearchPanel from '@components/Search/SearchPanel';
 import CardList from '@components/CardList/CardList';
+import SortPanel from '@components/SortPanel/SortPanel';
 import styled from 'styled-components';
 import { MainBlock } from '@components/styledComponents/Main';
 import { useTheme } from '@context/ThemeContext';
@@ -18,6 +19,7 @@ function Main(): ReactElement {
   return (
     <MainContent direction={'column'} theme={theme}>
       <SearchPanel />
+      <SortPanel />
       <CardList />
     </MainContent>
   );

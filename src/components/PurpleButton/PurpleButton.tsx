@@ -1,14 +1,25 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { ReactElement } from 'react';
 import styled from 'styled-components';
-import { NavLink } from '@components/styledComponents/Link';
 
 type Props = {
-  path: string;
   text: string;
+  styles?: ButtonProps;
+  onClickHandler?: () => void;
 };
 
-const CardButton = styled.button`
-  width: 100%;
+function PurpleButton({ text, styles, onClickHandler }: Props): ReactElement {
+  return (
+    <Button onClick={onClickHandler} width={styles?.width}>
+      {text}
+    </Button>
+  );
+}
+
+export default PurpleButton;
+
+const Button = styled.button<ButtonProps>`
+  width: ${props => props.width || '100%'};
   background-color: #da9bfa;
   border-radius: 10px;
   border: 2px solid #da9bfa;
@@ -22,12 +33,6 @@ const CardButton = styled.button`
   }
 `;
 
-function PurpleButton({ path, text }: Props): ReactElement {
-  return (
-    <NavLink width={'50%'} to={path}>
-      <CardButton>{text}</CardButton>
-    </NavLink>
-  );
-}
-
-export default PurpleButton;
+type ButtonProps = {
+  width?: string;
+};

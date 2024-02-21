@@ -27,7 +27,7 @@ function SuggestionList({
       width={'30%'}
       justify_content={'space-around'}
       background_color={'white'}
-      top={'20%'}
+      top={'26%'}
       direction={'column'}
       border_radius={'10px'}
       gap={'5px'}
