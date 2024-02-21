@@ -4,7 +4,10 @@ import { useGetCharacterQuery } from '@services/rickMorthyApi';
 import HeartButton from '@components/CardList/Card/HeartButton';
 import { Block, ColoredBlock } from '@components/styledComponents/Blocks';
 import { BoldText, Text } from '@components/styledComponents/Text';
-import { VerticalSeparator } from '@components/styledComponents/Separators';
+import {
+  HorizontalSeparator,
+  VerticalSeparator,
+} from '@components/styledComponents/Separators';
 import PurpleButton from '@components/PurpleButton/PurpleButton';
 import { LoadingSpinner } from '@components/Loader/LoadingSpinner';
 import Error from '@components/Error/Error';
@@ -53,10 +56,13 @@ function Character(): ReactElement {
       background_color={'#bbccfb'}
       direction="column"
     >
-      {content}
-      <VerticalSeparator height={'40px'} />
-      <EpisodesList />
+      <Block width={'70%'}>
+        {content}
+        <EpisodesList />
+      </Block>
+      <HorizontalSeparator height={'20px'} />
       <PurpleButton
+        styles={{ width: '40%' }}
         onClickHandler={handleButtonClick}
         text={'Back to characters'}
       />
@@ -89,7 +95,7 @@ function CharacterCard({
 }: CharacterContentProps): ReactElement {
   return (
     <ColoredBlock
-      width={'50%'}
+      width={'100%'}
       height={'50vh'}
       border_radius={'10px'}
       background_color={'white'}
