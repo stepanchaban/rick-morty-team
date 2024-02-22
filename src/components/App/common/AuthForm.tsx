@@ -20,6 +20,12 @@ type User = {
   confirmPassword?: string;
 };
 
+type UserLS = {
+  email: string;
+  password: string;
+  userID: string;
+};
+
 type AuthFormProps = {
   formType: 'signin' | 'signup';
   children: React.ReactNode;
@@ -64,7 +70,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType, children }) => {
     }
 
     const usersString = localStorage.getItem('users');
-    const users: User[] = usersString ? JSON.parse(usersString) : [];
+    const users: UserLS[] = usersString ? JSON.parse(usersString) : [];
 
     if (formType === 'signup') {
       const isUser = users.some(user => user.email === email);
@@ -87,13 +93,15 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType, children }) => {
       }
 
       dispatch(setIsAuth(true));
+      const userID = generateID();
       localStorage.setItem('isAuth', 'true');
-      users.push({ email, password });
+      localStorage.setItem('currentUser', userID);
+      users.push({ email, password, userID });
       localStorage.setItem('users', JSON.stringify(users));
       navigate('/');
     } else {
-      const existingUser = users.find(user => user.email === email);
-      if (!existingUser || existingUser.password !== password) {
+      const user = users.find(user => user.email === email);
+      if (!user || user.password !== password) {
         setErrors({
           email: 'Invalid email or password',
           password: 'Invalid email or password',
@@ -102,7 +110,9 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType, children }) => {
       }
 
       dispatch(setIsAuth(true));
+
       localStorage.setItem('isAuth', 'true');
+      localStorage.setItem('currentUser', user.userID);
       alert('Login successful!');
       navigate('/');
     }
@@ -128,3 +138,24 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType, children }) => {
 };
 
 export default AuthForm;
+
+const S4 = function (): string {
+  return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+};
+
+function generateID(): string {
+  return (
+    S4() +
+    S4() +
+    '-' +
+    S4() +
+    '-' +
+    S4() +
+    '-' +
+    S4() +
+    '-' +
+    S4() +
+    S4() +
+    S4()
+  );
+}
