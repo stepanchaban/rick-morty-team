@@ -6,7 +6,7 @@ import { Card as CardType } from '@projectTypes/Card';
 
 type CardProps = CardType & {
   path: string;
-  onClickHandler: () => void;
+  onClickHandler?: () => void;
 };
 
 const CardWrap = styled.div`

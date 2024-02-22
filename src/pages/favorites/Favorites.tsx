@@ -1,16 +1,30 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useState, useEffect, Fragment } from 'react';
 import { findUserInfo } from '@utils/findUserInfo';
+import { Character } from '@projectTypes/Character';
+import Card from '@components/CardList/Card/Card';
+
+const baseURL = 'https://rickandmortyapi.com/api';
 
 function Favorites(): ReactElement {
-  const userFavorites = findUserInfo('favorites');
-  console.log(userFavorites);
-  const [favorites, setFavorites] = useState(userFavorites);
-  // setFavorites(userFavorites);
-
+  const userFavorites: Character[] = findUserInfo('favorites');
+  const [favorites, setFavorites] = useState<Character[]>([]);
+  useEffect(() => {
+    const favsChars: Character[] = [];
+    userFavorites.map(async id => {
+      const response = await fetch(`${baseURL}/character/${id}`);
+      if (response.ok) {
+        const characterData = await response.json();
+        favsChars.push(characterData);
+      } else {
+        console.log('error');
+      }
+    });
+  }, []);
   return (
     <div>
-      {/* {favorites.map((item, index) => {
+      {favorites.map((item, index) => {
         const path = `/characters/${item.id}`;
+        console.log(item);
         return (
           <Fragment key={index}>
             <Card
@@ -24,7 +38,7 @@ function Favorites(): ReactElement {
             />
           </Fragment>
         );
-      })} */}
+      })}
     </div>
   );
 }
