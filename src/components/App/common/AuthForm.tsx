@@ -13,17 +13,12 @@ import {
   AuthTitle,
   AuthWrapper,
 } from '@components/styledComponents/AuthForm';
+import { UserLS } from '@projectTypes/UserLS';
 
 type User = {
   email: string;
   password: string;
   confirmPassword?: string;
-};
-
-type UserLS = {
-  email: string;
-  password: string;
-  userID: string;
 };
 
 type AuthFormProps = {
@@ -96,7 +91,13 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType, children }) => {
       const userID = generateID();
       localStorage.setItem('isAuth', 'true');
       localStorage.setItem('currentUser', userID);
-      users.push({ email, password, userID });
+      users.push({
+        email: email,
+        password: password,
+        userID: userID,
+        favorites: [],
+        history: [],
+      });
       localStorage.setItem('users', JSON.stringify(users));
       navigate('/');
     } else {
