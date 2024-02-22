@@ -12,6 +12,7 @@ import PurpleButton from '@components/PurpleButton/PurpleButton';
 import { LoadingSpinner } from '@components/Loader/LoadingSpinner';
 import Error from '@components/Error/Error';
 import EpisodesList from '@components/EpisodesList/EpisodesList';
+import { parseDate } from '@utils/parseData';
 
 function Character(): ReactElement {
   const navigate = useNavigate();
@@ -71,17 +72,6 @@ function Character(): ReactElement {
 }
 
 export default Character;
-
-function parseDate(date: string | undefined): string {
-  if (date) {
-    const dateObj = new Date(date);
-    const year = dateObj.getFullYear();
-    const month = dateObj.getMonth();
-    const day = dateObj.getDate();
-    return `${year}-${month}-${day}`;
-  }
-  return '';
-}
 
 function CharacterCard({
   image,
