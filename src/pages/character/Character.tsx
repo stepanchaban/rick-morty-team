@@ -103,7 +103,7 @@ function CharacterCard({
     >
       <Block width={'auto'} position={'relative'}>
         <img src={image} title="character" />
-        <HeartButton />
+        {/* <HeartButton {...props}/> */}
       </Block>
       <Block width={'auto'} direction="column">
         <BoldText font_size={'34px'}>{name}</BoldText>

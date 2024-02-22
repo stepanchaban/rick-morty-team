@@ -1,10 +1,20 @@
 import { ReactElement, useState } from 'react';
 import { ReactComponent as Heart } from '@sources/icons/favorite-heart-circle.svg';
 import styled from 'styled-components';
+import { Card as CardType } from '@projectTypes/Card';
+import { useAppSelector } from '@hooks/reduxHooks';
+import { RootState } from '@store/store';
 
 interface IButtonProps {
   $isFavourite: boolean;
 }
+
+type CardProps = CardType & {
+  path: string;
+  favorites?: CardType[];
+  // isFavourite: boolean;
+  handleClick?: (newFavorite: CardType) => void;
+};
 
 const Button = styled(Heart)<IButtonProps>`
   position: absolute;
@@ -17,14 +27,24 @@ const Button = styled(Heart)<IButtonProps>`
   }
 `;
 
-function HeartButton(): ReactElement {
+function HeartButton(props: CardProps): ReactElement | null {
+  const isAuth = useAppSelector((state: RootState) => state.auth.auth);
+  // const isInFavorite = favorites.find(item => {
+  //   return item.id === props.id;
+  // });
+  // console.log(favorites);
   const [isFavourite, setIsFavourite] = useState(false);
 
-  function favouriteToggle(): void {
-    setIsFavourite(!isFavourite);
-  }
+  // function handleClick(): void {
+  //   togglerFavorites(props);
+  // }
 
-  return <Button $isFavourite={isFavourite} onClick={favouriteToggle} />;
+  // useEffect(() => {
+  //   const isInFavoriteUpdated = favorites.find(item => item.id === props.id);
+  //   setIsFavourite(isInFavoriteUpdated ? true : false);
+  // }, [favorites, props.id]);
+
+  return isAuth ? <Button $isFavourite={isFavourite} /> : null;
 }
 
 export default HeartButton;

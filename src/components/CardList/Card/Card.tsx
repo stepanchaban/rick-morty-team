@@ -27,25 +27,18 @@ const CardTitle = styled.span`
   font-size: 20px;
 `;
 
-function Card({
-  image,
-  name,
-  species,
-  gender,
-  status,
-  path,
-}: CardProps): ReactElement {
+function Card(props: CardProps): ReactElement {
   return (
     <CardWrap>
       <ImageWrap>
-        <img src={image} title="character" />
-        <HeartButton />
+        <img src={props.image} title="character" />
+        <HeartButton {...props} />
       </ImageWrap>
-      <CardTitle>{name}</CardTitle>
-      <span>Species: {species}</span>
-      <span>Gender: {gender}</span>
-      <span>Status: {status}</span>
-      <PurpleButtonLink path={path || ''} text={'More'} />
+      <CardTitle>{props.name}</CardTitle>
+      <span>Species: {props.species}</span>
+      <span>Gender: {props.gender}</span>
+      <span>Status: {props.status}</span>
+      <PurpleButtonLink path={props.path || ''} text={'More'} />
     </CardWrap>
   );
 }

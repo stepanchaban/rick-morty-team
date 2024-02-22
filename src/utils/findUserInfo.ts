@@ -1,6 +1,6 @@
 import { UserLS } from '@projectTypes/UserLS';
 
-export function findUserInfo(infoType: string): string[] {
+export function findUserInfo<T>(infoType: string): T[] {
   const currentUser = localStorage.getItem('currentUser');
   const usersStr = localStorage.getItem('users');
   const users = usersStr ? JSON.parse(usersStr) : [];

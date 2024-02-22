@@ -9,7 +9,7 @@ function CommonLayer({ children }: Props): ReactElement {
   return (
     <>
       <Header />
-      {children}
+      <div>{children}</div>
     </>
   );
 }

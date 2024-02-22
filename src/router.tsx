@@ -6,6 +6,19 @@ import Favorites from '@pages/favorites/Favorites';
 import History from '@pages/history/History';
 import Character from '@pages/character/Character';
 import { createHashRouter } from 'react-router-dom';
+import { useAppSelector } from '@hooks/reduxHooks';
+import { ReactElement } from 'react';
+
+const ShowFavoritesOrSignin = (): ReactElement => {
+  const isAuth = useAppSelector(state => state.auth.auth);
+
+  return isAuth ? <Favorites /> : <Signin />;
+};
+const ShowHistoryOrSignin = (): ReactElement => {
+  const isAuth = useAppSelector(state => state.auth.auth);
+
+  return isAuth ? <History /> : <Signin />;
+};
 
 const router = createHashRouter([
   {
@@ -34,11 +47,11 @@ const router = createHashRouter([
       },
       {
         path: '/favorites',
-        element: <Favorites />,
+        element: <ShowFavoritesOrSignin />,
       },
       {
         path: '/history',
-        element: <History />,
+        element: <ShowHistoryOrSignin />,
       },
     ],
   },
