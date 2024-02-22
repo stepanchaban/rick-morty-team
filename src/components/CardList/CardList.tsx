@@ -6,6 +6,7 @@ import { useGetCharactersQuery } from '@services/rickMorthyApi';
 import Error from '@components/Error/Error';
 import { useAppSelector } from '@hooks/reduxHooks';
 import { helperSort } from '@utils/sorting';
+import { addFavorites } from './addFavorites';
 
 const CardListContent = styled.div`
   display: flex;
@@ -27,6 +28,9 @@ function CardList(): ReactElement {
     const sortedData = helperSort(firstGroup, storageData);
     content = sortedData.map((item, index) => {
       const path = `/characters/${item.id}`;
+      function onClickHandler(): void {
+        addFavorites(String(item.id));
+      }
       return (
         <Fragment key={index}>
           <Card
@@ -37,6 +41,7 @@ function CardList(): ReactElement {
             status={item.status}
             id={item.id}
             path={path}
+            onClickHandler={onClickHandler}
           />
         </Fragment>
       );
