@@ -6,6 +6,7 @@ import { Card as CardType } from '@projectTypes/Card';
 
 type CardProps = CardType & {
   path: string;
+  onClickHandler: () => void;
 };
 
 const CardWrap = styled.div`
@@ -30,7 +31,7 @@ const CardTitle = styled.span`
 function Card(props: CardProps): ReactElement {
   return (
     <CardWrap>
-      <ImageWrap>
+      <ImageWrap onClick={props.onClickHandler}>
         <img src={props.image} title="character" />
         <HeartButton {...props} />
       </ImageWrap>
