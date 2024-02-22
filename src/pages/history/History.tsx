@@ -1,41 +1,56 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import { findUserInfo } from '@utils/findUserInfo';
 import { Block } from '@components/styledComponents/Blocks';
-import { BoldText } from '@components/styledComponents/Text';
+import { BoldText, Text } from '@components/styledComponents/Text';
 import { VerticalSeparator } from '@components/styledComponents/Separators';
 import { TableEl, TD } from '@components/styledComponents/Table';
 import deleteIcon from '@sources/icons/delete.png';
 import { useNavigate } from 'react-router-dom';
+import { HistoryInfo } from '@projectTypes/HistoryInfo';
+import { deleteItemFronUserHistory } from '@components/Search/addURLToUserHistory';
 
 function History(): ReactElement {
-  const userHistory: TableData[] = findUserInfo('history');
+  const userHistory: HistoryInfo[] = findUserInfo('history');
+  const [tableContent, setTableContent] = useState(userHistory);
+
+  function updateTableContent(): void {
+    const userHistory: HistoryInfo[] = findUserInfo('history');
+    setTableContent(userHistory);
+  }
+
+  const content =
+    tableContent.length > 0 ? (
+      <Table updateTableContent={updateTableContent} data={tableContent} />
+    ) : (
+      <Text font_size={'18px'}>Nothing to show</Text>
+    );
 
   return (
     <Block direction={'column'}>
       <VerticalSeparator height={'50px'} />
       <BoldText font_size={'24px'}>Search history</BoldText>
       <VerticalSeparator height={'50px'} />
-      <Table data={userHistory} />
+      {content}
     </Block>
   );
 }
 
-type TableData = {
-  search: string;
-  date: string;
-  url: string;
-  id: string;
-  sortType: string;
-};
+export default History;
 
 type TableProps = {
-  data: TableData[];
+  data: HistoryInfo[];
+  updateTableContent: () => void;
 };
 
-function Table({ data }: TableProps): ReactElement {
+function Table({ data, updateTableContent }: TableProps): ReactElement {
   const navigate = useNavigate();
 
   const columns = data.map((item, index) => {
+    function deleteHandler(): void {
+      deleteItemFronUserHistory(item.id);
+      updateTableContent();
+    }
+
     function onClickHandler(): void {
       navigate(`/${item.url}`);
     }
@@ -45,7 +60,7 @@ function Table({ data }: TableProps): ReactElement {
         <TD onClick={onClickHandler}>{item.search}</TD>
         <TD>{item.sortType || 'No sorting'}</TD>
         <TD>{item.date}</TD>
-        <TD>
+        <TD onClick={deleteHandler}>
           <Block width={'100%'}>
             <img width={'10%'} src={deleteIcon} alt="delete icon" />
           </Block>
@@ -69,5 +84,3 @@ function Table({ data }: TableProps): ReactElement {
     </TableEl>
   );
 }
-
-export default History;
