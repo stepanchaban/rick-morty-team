@@ -6,6 +6,7 @@ import { VerticalSeparator } from '@components/styledComponents/Separators';
 import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
 import { setSearchValue } from '@store/slice/searchValueSlice';
 import useDefineCharacterPageParams from '@hooks/useDefineCharacterPageParams';
+import { addURLToUserHistory } from './addURLToUserHistory';
 
 const delay = 1000;
 
@@ -19,9 +20,10 @@ const SearchInput = memo(function ({
   selectedItem,
 }: Props): ReactElement {
   const ref = useRef<HTMLInputElement | null>(null);
-  const debouncedOnChange = useDebounce(onChange, delay);
+  const debouncedOnChange = useDebounce(onChangeHandler, delay);
   const dispatch = useAppDispatch();
   const searchValue = useAppSelector(state => state.searchValue.searchValue);
+  const isAuth = useAppSelector(state => state.auth.auth);
   const navigateToURLWithParams = useDefineCharacterPageParams();
 
   useEffect(() => {
@@ -36,17 +38,20 @@ const SearchInput = memo(function ({
     }
   }, [selectedItem]);
 
-  function onChange(): void {
+  function onChangeHandler(): void {
     if (ref.current) {
       setNewSearchValue(ref.current.value);
     }
   }
 
-  function onClick(): void {
+  function onClickHandler(): void {
     if (ref.current) {
       setNewSearchValue('');
       dispatch(setSearchValue(ref.current.value));
       navigateToURLWithParams('search', ref.current.value);
+      if (isAuth) {
+        addURLToUserHistory(ref.current.value);
+      }
     }
   }
 
@@ -60,7 +65,7 @@ const SearchInput = memo(function ({
       />
       <VerticalSeparator width={'10px'} />
       <PurpleButton
-        onClickHandler={onClick}
+        onClickHandler={onClickHandler}
         text={'Search'}
         styles={{ width: '30%' }}
       />
