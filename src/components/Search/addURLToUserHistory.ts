@@ -1,4 +1,4 @@
-import { UserLS } from '@projectTypes/UserLS';
+import { findCurrentUserInfo } from '@utils/findUserInfo';
 import { parseDate } from '@utils/parseData';
 import { generateID } from '@utils/generateID';
 import { HistoryInfo } from '@projectTypes/HistoryInfo';
@@ -7,12 +7,7 @@ export function addURLToUserHistory(search: string, sortType: string): void {
   if (search === '') {
     return;
   }
-  const currentUser = localStorage.getItem('currentUser');
-  const usersStr = localStorage.getItem('users');
-  const users = usersStr ? JSON.parse(usersStr) : [];
-  const currentUserInfo = users.find(
-    (user: UserLS) => user.userID === currentUser,
-  );
+  const { users, currentUserInfo } = findCurrentUserInfo();
   const history = {
     search: search,
     date: parseDate(new Date().toISOString()),
@@ -25,12 +20,7 @@ export function addURLToUserHistory(search: string, sortType: string): void {
 }
 
 export function deleteItemFronUserHistory(historyId: string): void {
-  const currentUser = localStorage.getItem('currentUser');
-  const usersStr = localStorage.getItem('users');
-  const users = usersStr ? JSON.parse(usersStr) : [];
-  const currentUserInfo = users.find(
-    (user: UserLS) => user.userID === currentUser,
-  );
+  const { users, currentUserInfo } = findCurrentUserInfo();
   const filteredHistory = currentUserInfo.history.filter(
     (historyItem: HistoryInfo) => historyItem.id !== historyId,
   );
