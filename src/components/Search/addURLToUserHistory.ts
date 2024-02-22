@@ -1,7 +1,8 @@
 import { UserLS } from '@projectTypes/UserLS';
 import { parseDate } from '@utils/parseData';
+import { generateID } from '@utils/generateID';
 
-export function addURLToUserHistory(search: string): void {
+export function addURLToUserHistory(search: string, sortType: string): void {
   if (search === '') {
     return;
   }
@@ -14,7 +15,9 @@ export function addURLToUserHistory(search: string): void {
   const history = {
     search: search,
     date: parseDate(new Date().toISOString()),
-    url: window.location.href,
+    url: window.location.hash,
+    id: generateID(),
+    sortType: sortType,
   };
   currentUserInfo.history.push(history);
   localStorage.setItem('users', JSON.stringify(users));

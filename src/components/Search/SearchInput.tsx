@@ -23,6 +23,7 @@ const SearchInput = memo(function ({
   const debouncedOnChange = useDebounce(onChangeHandler, delay);
   const dispatch = useAppDispatch();
   const searchValue = useAppSelector(state => state.searchValue.searchValue);
+  const sortType = useAppSelector(state => state.sort.firstGroup);
   const isAuth = useAppSelector(state => state.auth.auth);
   const navigateToURLWithParams = useDefineCharacterPageParams();
 
@@ -50,7 +51,7 @@ const SearchInput = memo(function ({
       dispatch(setSearchValue(ref.current.value));
       navigateToURLWithParams('search', ref.current.value);
       if (isAuth) {
-        addURLToUserHistory(ref.current.value);
+        addURLToUserHistory(ref.current.value, sortType);
       }
     }
   }

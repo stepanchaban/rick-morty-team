@@ -5,50 +5,45 @@ import { BoldText } from '@components/styledComponents/Text';
 import { VerticalSeparator } from '@components/styledComponents/Separators';
 import { TableEl, TD } from '@components/styledComponents/Table';
 import deleteIcon from '@sources/icons/delete.png';
+import { useNavigate } from 'react-router-dom';
 
 function History(): ReactElement {
-  const userHistory = findUserInfo('history');
+  const userHistory: TableData[] = findUserInfo('history');
 
   return (
     <Block direction={'column'}>
       <VerticalSeparator height={'50px'} />
       <BoldText font_size={'24px'}>Search history</BoldText>
       <VerticalSeparator height={'50px'} />
-      <Table data={tableData} />
+      <Table data={userHistory} />
     </Block>
   );
 }
 
 type TableData = {
-  searchQuery: string;
+  search: string;
   date: string;
+  url: string;
+  id: string;
+  sortType: string;
 };
-
-const tableData = [
-  {
-    searchQuery: 'gdgsdhgfgh',
-    date: '12-12-2023',
-  },
-  {
-    searchQuery: 'gdgsdhgfgh',
-    date: '12-12-2023',
-  },
-  {
-    searchQuery: 'gdgsdhgfgh',
-    date: '12-12-2023',
-  },
-];
 
 type TableProps = {
   data: TableData[];
 };
 
 function Table({ data }: TableProps): ReactElement {
+  const navigate = useNavigate();
+
   const columns = data.map((item, index) => {
+    function onClickHandler(): void {
+      navigate(`/${item.url}`);
+    }
     return (
-      <tr key={`${item.date}${item.searchQuery}`}>
+      <tr key={item.id}>
         <TD scope="row">{index + 1}</TD>
-        <TD>{item.searchQuery}</TD>
+        <TD onClick={onClickHandler}>{item.search}</TD>
+        <TD>{item.sortType || 'No sorting'}</TD>
         <TD>{item.date}</TD>
         <TD>
           <Block width={'100%'}>
@@ -65,6 +60,7 @@ function Table({ data }: TableProps): ReactElement {
         <tr>
           <th scope="col">№</th>
           <th scope="col">Search query</th>
+          <th scope="col">Sort type</th>
           <th scope="col">Date</th>
           <th scope="col">Delete item</th>
         </tr>

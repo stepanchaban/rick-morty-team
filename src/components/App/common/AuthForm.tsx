@@ -14,6 +14,7 @@ import {
   AuthWrapper,
 } from '@components/styledComponents/AuthForm';
 import { UserLS } from '@projectTypes/UserLS';
+import { generateID } from '@utils/generateID';
 
 type User = {
   email: string;
@@ -139,24 +140,3 @@ const AuthForm: React.FC<AuthFormProps> = ({ formType, children }) => {
 };
 
 export default AuthForm;
-
-const S4 = function (): string {
-  return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-};
-
-function generateID(): string {
-  return (
-    S4() +
-    S4() +
-    '-' +
-    S4() +
-    '-' +
-    S4() +
-    '-' +
-    S4() +
-    '-' +
-    S4() +
-    S4() +
-    S4()
-  );
-}
