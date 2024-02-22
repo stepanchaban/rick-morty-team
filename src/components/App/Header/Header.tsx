@@ -28,6 +28,7 @@ const Header: React.FC = () => {
   const handleLogout = (): void => {
     dispatch(setIsAuth(false));
     localStorage.setItem('isAuth', 'false');
+    localStorage.setItem('currentUser', '');
     navigate('/');
   };
 
