@@ -1,6 +1,5 @@
 # О проекте
-
-Цель создания проекта - изучение React, Redux Toolkit, TypeScript. Приложение представляет собой энциклопедию персонажей сериала Рик и Морти, данные персонажей берутся из [API](https://github.com/stepanchaban/rick-morty-team/blob/main/src/components/CardList/CardList.tsx).
+Приложение представляет собой энциклопедию персонажей сериала Рик и Морти, данные персонажей берутся из [API](https://github.com/stepanchaban/rick-morty-team/blob/main/src/components/CardList/CardList.tsx).
 
 ## Функционал
 
